@@ -93,7 +93,7 @@ export function WeaponList() {
 
       {/* 武器リスト */}
       <main className="p-4">
-        <div className="space-y-2">
+        <div className="grid grid-cols-3 gap-2">
           {activeWeapons.map((weapon) => (
             <WeaponItem
               key={weapon.id}
@@ -102,13 +102,13 @@ export function WeaponList() {
               onToggle={toggleCheck}
             />
           ))}
-
-          {activeWeapons.length === 0 && (
-            <div className="text-center text-gray-500 mt-8">
-              武器がありません
-            </div>
-          )}
         </div>
+
+        {activeWeapons.length === 0 && (
+          <div className="text-center text-gray-500 mt-8">
+            武器がありません
+          </div>
+        )}
       </main>
     </div>
   );

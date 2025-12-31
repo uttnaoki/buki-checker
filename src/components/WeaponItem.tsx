@@ -13,20 +13,26 @@ export function WeaponItem({ weapon, checked, onToggle }: WeaponItemProps) {
     <button
       onClick={() => onToggle(weapon.id)}
       className={`
-        w-full flex items-center gap-3 p-4
-        transition-colors duration-200
-        border-b border-gray-200
-        active:bg-gray-100
-        ${checked ? 'bg-green-50' : 'bg-white'}
+        relative aspect-square flex flex-col items-center justify-center p-3
+        rounded-lg border-2 transition-all duration-200
+        active:scale-95
+        ${
+          checked
+            ? 'bg-green-50 border-green-600'
+            : 'bg-white border-gray-300 hover:border-gray-400'
+        }
       `}
       aria-label={`${weapon.name}を${checked ? '未チェック' : 'チェック'}にする`}
     >
-      <span className="text-2xl flex-shrink-0">
-        {checked ? '☑' : '□'}
-      </span>
+      {/* チェックマーク */}
+      {checked && (
+        <div className="absolute top-1 right-1 text-green-600 text-xl">☑</div>
+      )}
+
+      {/* 武器名 */}
       <span
         className={`
-          text-left flex-1 text-base
+          text-xs text-center leading-tight line-clamp-3
           ${checked ? 'text-gray-600' : 'text-gray-900'}
         `}
       >
