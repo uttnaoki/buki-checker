@@ -11,8 +11,41 @@ export function WeaponList() {
   const { isLoaded, toggleCheck, isChecked, getCheckedCount } = useWeaponChecks();
   const weaponsByCategory = useMemo(() => getWeaponsByCategory(), []);
 
-  // 全カテゴリのキーを取得
-  const allCategories = Object.keys(weaponsByCategory) as WeaponCategoryType[];
+  // カテゴリごとのチェック状況を計算
+  const categoryStats = useMemo(() => {
+    const stats: Record<string, { total: number; checked: number; isComplete: boolean }> = {};
+    Object.entries(weaponsByCategory).forEach(([category, weapons]) => {
+      const total = weapons.length;
+      const checked = getCheckedCount(weapons.map((w) => w.id));
+      stats[category] = {
+        total,
+        checked,
+        isComplete: total > 0 && checked === total,
+      };
+    });
+    return stats;
+  }, [weaponsByCategory, getCheckedCount]);
+
+  // カテゴリの並び替え: grizzco → 未完了 → 完了済み
+  const allCategories = useMemo(() => {
+    const categories = Object.keys(weaponsByCategory) as WeaponCategoryType[];
+    return categories.sort((a, b) => {
+      // grizzco を最初に
+      if (a === 'grizzco') return -1;
+      if (b === 'grizzco') return 1;
+
+      // 完了状況で並び替え（未完了が先）
+      const aComplete = categoryStats[a]?.isComplete || false;
+      const bComplete = categoryStats[b]?.isComplete || false;
+      if (aComplete !== bComplete) {
+        return aComplete ? 1 : -1;
+      }
+
+      // 同じ完了状況の場合は元の順序を維持
+      return 0;
+    });
+  }, [weaponsByCategory, categoryStats]);
+
   const [activeCategory, setActiveCategory] = useState<WeaponCategoryType>(allCategories[0]);
 
   // アクティブなカテゴリの武器
@@ -70,22 +103,29 @@ export function WeaponList() {
           {/* カテゴリタブ */}
           <div className="overflow-x-auto -mx-4 px-4">
             <div className="flex gap-2 min-w-max">
-              {allCategories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={`
-                    px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap
-                    ${
-                      activeCategory === category
-                        ? 'bg-green-600 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }
-                  `}
-                >
-                  {CATEGORY_LABELS[category]}
-                </button>
-              ))}
+              {allCategories.map((category) => {
+                const stats = categoryStats[category];
+                const isComplete = stats?.isComplete || false;
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`
+                      px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap
+                      ${
+                        activeCategory === category
+                          ? 'bg-green-600 text-white'
+                          : isComplete
+                          ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }
+                    `}
+                  >
+                    {isComplete && '✓ '}
+                    {CATEGORY_LABELS[category]}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
