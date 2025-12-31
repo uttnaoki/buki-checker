@@ -51,9 +51,15 @@ export function WeaponList() {
       <header className="sticky top-0 z-10 bg-white shadow-sm">
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl font-bold text-gray-900">武器チェッカー</h1>
-            <div className="text-sm text-gray-600">
-              {totalChecked}/{totalWeapons}
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">サーモンラン</h1>
+              <p className="text-sm text-gray-600">武器チェッカー</p>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-green-600">
+                {totalChecked}/{totalWeapons}
+              </div>
+              <div className="text-xs text-gray-500">支給済み</div>
             </div>
           </div>
 
@@ -65,7 +71,7 @@ export function WeaponList() {
                 px-4 py-2 rounded text-sm font-medium transition-colors
                 ${
                   filter === 'all'
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-green-600 text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }
               `}
@@ -78,12 +84,12 @@ export function WeaponList() {
                 px-4 py-2 rounded text-sm font-medium transition-colors
                 ${
                   filter === 'unchecked'
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-green-600 text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }
               `}
             >
-              未チェック
+              未支給
             </button>
             <button
               onClick={() => setFilter('checked')}
@@ -91,12 +97,12 @@ export function WeaponList() {
                 px-4 py-2 rounded text-sm font-medium transition-colors
                 ${
                   filter === 'checked'
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-green-600 text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }
               `}
             >
-              チェック済み
+              支給済み
             </button>
           </div>
         </div>

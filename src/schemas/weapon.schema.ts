@@ -17,6 +17,7 @@ export const weaponCategorySchema = z.enum([
   'shelter',    // シェルター
   'stringer',   // ストリンガー
   'wiper',      // ワイパー
+  'grizzco',    // クマサン印
 ]);
 
 // 武器データ

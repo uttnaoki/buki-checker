@@ -24,7 +24,8 @@ export const CATEGORY_LABELS: Record<WeaponCategory, string> = {
   shelter: 'シェルター',
   stringer: 'ストリンガー',
   wiper: 'ワイパー',
+  grizzco: 'クマサン印',
 };
 
 // ローカルストレージキー
-export const STORAGE_KEY = 'splatoon3-weapon-checks' as const;
+export const STORAGE_KEY = 'splatoon3-salmon-run-weapon-checks' as const;

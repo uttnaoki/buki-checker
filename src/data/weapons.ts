@@ -169,6 +169,53 @@ export const WEAPONS: Weapon[] = [
     name: 'ジムワイパー',
     category: 'wiper',
   },
+
+  // クマサン印（サーモンラン専用武器）
+  {
+    id: 'grizzco-blaster',
+    name: 'クマサン印のブラスター',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-charger',
+    name: 'クマサン印のチャージャー',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-slosher',
+    name: 'クマサン印のスロッシャー',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-maneuver',
+    name: 'クマサン印のマニューバー',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-roller',
+    name: 'クマサン印のローラー',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-wiper',
+    name: 'クマサン印のワイパー',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-stringer',
+    name: 'クマサン印のストリンガー',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-shelter',
+    name: 'クマサン印のシェルター',
+    category: 'grizzco',
+  },
+  {
+    id: 'grizzco-spinner',
+    name: 'クマサン印のスピナー',
+    category: 'grizzco',
+  },
 ];
 
 // カテゴリごとに武器を取得
