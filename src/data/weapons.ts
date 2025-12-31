@@ -25,6 +25,16 @@ export const WEAPONS: Weapon[] = [
     category: 'shooter',
   },
   {
+    id: 'sharp-marker',
+    name: 'シャープマーカー',
+    category: 'shooter',
+  },
+  {
+    id: 'bold-marker',
+    name: 'ボールドマーカー',
+    category: 'shooter',
+  },
+  {
     id: 'n-zap85',
     name: 'N-ZAP85',
     category: 'shooter',
@@ -32,6 +42,46 @@ export const WEAPONS: Weapon[] = [
   {
     id: '52gal',
     name: '.52ガロン',
+    category: 'shooter',
+  },
+  {
+    id: '96gal',
+    name: '.96ガロン',
+    category: 'shooter',
+  },
+  {
+    id: 'prime-shooter',
+    name: 'プライムシューター',
+    category: 'shooter',
+  },
+  {
+    id: 'jet-sweeper',
+    name: 'ジェットスウィーパー',
+    category: 'shooter',
+  },
+  {
+    id: 'space-shooter',
+    name: 'スペースシューター',
+    category: 'shooter',
+  },
+  {
+    id: 'l3-reelgun',
+    name: 'L3リールガン',
+    category: 'shooter',
+  },
+  {
+    id: 'h3-reelgun',
+    name: 'H3リールガン',
+    category: 'shooter',
+  },
+  {
+    id: 'bottlegeyser',
+    name: 'ボトルガイザー',
+    category: 'shooter',
+  },
+  {
+    id: 'splattery',
+    name: 'スパッタリー',
     category: 'shooter',
   },
 
@@ -51,6 +101,21 @@ export const WEAPONS: Weapon[] = [
     name: 'クラッシュブラスター',
     category: 'blaster',
   },
+  {
+    id: 'rapid-blaster',
+    name: 'ラピッドブラスター',
+    category: 'blaster',
+  },
+  {
+    id: 'long-blaster',
+    name: 'ロングブラスター',
+    category: 'blaster',
+  },
+  {
+    id: 's-blast92',
+    name: 'S-BLAST92',
+    category: 'blaster',
+  },
 
   // ローラー
   {
@@ -68,6 +133,16 @@ export const WEAPONS: Weapon[] = [
     name: 'ダイナモローラー',
     category: 'roller',
   },
+  {
+    id: 'wide-roller',
+    name: 'ワイドローラー',
+    category: 'roller',
+  },
+  {
+    id: 'variable-roller',
+    name: 'バリアブルローラー',
+    category: 'roller',
+  },
 
   // フデ
   {
@@ -78,6 +153,11 @@ export const WEAPONS: Weapon[] = [
   {
     id: 'hokusai',
     name: 'ホクサイ',
+    category: 'brush',
+  },
+  {
+    id: 'fincent',
+    name: 'フィンセント',
     category: 'brush',
   },
 
@@ -97,6 +177,16 @@ export const WEAPONS: Weapon[] = [
     name: 'リッター4K',
     category: 'charger',
   },
+  {
+    id: 'soychooter',
+    name: 'ソイチューバー',
+    category: 'charger',
+  },
+  {
+    id: '14shiki-taketsutsutou',
+    name: '14式竹筒銃',
+    category: 'charger',
+  },
 
   // スロッシャー
   {
@@ -107,6 +197,21 @@ export const WEAPONS: Weapon[] = [
   {
     id: 'hissen',
     name: 'ヒッセン',
+    category: 'slosher',
+  },
+  {
+    id: 'screw-slosher',
+    name: 'スクリュースロッシャー',
+    category: 'slosher',
+  },
+  {
+    id: 'overflow-slosher',
+    name: 'オーバーフロッシャー',
+    category: 'slosher',
+  },
+  {
+    id: 'explosher',
+    name: 'エクスプロッシャー',
     category: 'slosher',
   },
 
@@ -121,6 +226,21 @@ export const WEAPONS: Weapon[] = [
     name: 'スプラスピナー',
     category: 'spinner',
   },
+  {
+    id: 'hydra-splatling',
+    name: 'ハイドラント',
+    category: 'spinner',
+  },
+  {
+    id: 'kugelschreiber',
+    name: 'クーゲルシライバー',
+    category: 'spinner',
+  },
+  {
+    id: 'nautilus',
+    name: 'ノーチラス',
+    category: 'spinner',
+  },
 
   // マニューバー
   {
@@ -133,6 +253,21 @@ export const WEAPONS: Weapon[] = [
     name: 'デュアルスイーパー',
     category: 'maneuver',
   },
+  {
+    id: 'kelvin525',
+    name: 'ケルビン525',
+    category: 'maneuver',
+  },
+  {
+    id: 'quad-hopper',
+    name: 'クアッドホッパー',
+    category: 'maneuver',
+  },
+  {
+    id: 'spy-gadget',
+    name: 'スパイガジェット',
+    category: 'maneuver',
+  },
 
   // シェルター
   {
@@ -143,6 +278,11 @@ export const WEAPONS: Weapon[] = [
   {
     id: 'campingshelter',
     name: 'キャンピングシェルター',
+    category: 'shelter',
+  },
+  {
+    id: '24shiki-harikae-gasa',
+    name: '24式張替傘',
     category: 'shelter',
   },
 
