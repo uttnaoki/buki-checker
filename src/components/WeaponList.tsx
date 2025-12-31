@@ -44,6 +44,7 @@ export function WeaponList() {
     (sum, weapons) => sum + weapons.length,
     0
   );
+  const progressPercentage = totalWeapons > 0 ? (totalChecked / totalWeapons) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -60,6 +61,19 @@ export function WeaponList() {
                 {totalChecked}/{totalWeapons}
               </div>
               <div className="text-xs text-gray-500">支給済み</div>
+            </div>
+          </div>
+
+          {/* プログレスバー */}
+          <div className="mb-4">
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div
+                className="bg-green-600 h-full transition-all duration-300 ease-out"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+            <div className="text-xs text-gray-500 text-right mt-1">
+              {progressPercentage.toFixed(1)}% COMPLETED
             </div>
           </div>
 
