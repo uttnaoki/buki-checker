@@ -1,35 +1,25 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import type { FilterType } from '@/types/weapon.types';
+import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
+import { CATEGORY_LABELS } from '@/types/weapon.types';
 import { getWeaponsByCategory } from '@/data/weapons';
 import { useWeaponChecks } from '@/hooks/useWeaponChecks';
-import { WeaponCategory } from './WeaponCategory';
+import { WeaponItem } from './WeaponItem';
 
 export function WeaponList() {
-  const [filter, setFilter] = useState<FilterType>('all');
   const { isLoaded, toggleCheck, isChecked, getCheckedCount } = useWeaponChecks();
-
   const weaponsByCategory = useMemo(() => getWeaponsByCategory(), []);
 
-  // フィルタリングされた武器
-  const filteredWeaponsByCategory = useMemo(() => {
-    if (filter === 'all') return weaponsByCategory;
+  // 全カテゴリのキーを取得
+  const allCategories = Object.keys(weaponsByCategory) as WeaponCategoryType[];
+  const [activeCategory, setActiveCategory] = useState<WeaponCategoryType>(allCategories[0]);
 
-    const filtered: typeof weaponsByCategory = {};
-    Object.entries(weaponsByCategory).forEach(([category, weapons]) => {
-      const filteredWeapons = weapons.filter((weapon) => {
-        const checked = isChecked(weapon.id);
-        return filter === 'checked' ? checked : !checked;
-      });
-
-      if (filteredWeapons.length > 0) {
-        filtered[category] = filteredWeapons;
-      }
-    });
-
-    return filtered;
-  }, [weaponsByCategory, filter, isChecked]);
+  // アクティブなカテゴリの武器
+  const activeWeapons = useMemo(
+    () => weaponsByCategory[activeCategory] || [],
+    [weaponsByCategory, activeCategory]
+  );
 
   if (!isLoaded) {
     return (
@@ -77,69 +67,48 @@ export function WeaponList() {
             </div>
           </div>
 
-          {/* フィルターボタン */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => setFilter('all')}
-              className={`
-                px-4 py-2 rounded text-sm font-medium transition-colors
-                ${
-                  filter === 'all'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }
-              `}
-            >
-              全て
-            </button>
-            <button
-              onClick={() => setFilter('unchecked')}
-              className={`
-                px-4 py-2 rounded text-sm font-medium transition-colors
-                ${
-                  filter === 'unchecked'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }
-              `}
-            >
-              未支給
-            </button>
-            <button
-              onClick={() => setFilter('checked')}
-              className={`
-                px-4 py-2 rounded text-sm font-medium transition-colors
-                ${
-                  filter === 'checked'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }
-              `}
-            >
-              支給済み
-            </button>
+          {/* カテゴリタブ */}
+          <div className="overflow-x-auto -mx-4 px-4">
+            <div className="flex gap-2 min-w-max">
+              {allCategories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`
+                    px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap
+                    ${
+                      activeCategory === category
+                        ? 'bg-green-600 text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    }
+                  `}
+                >
+                  {CATEGORY_LABELS[category]}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </header>
 
       {/* 武器リスト */}
       <main className="p-4">
-        {Object.entries(filteredWeaponsByCategory).map(([category, weapons]) => (
-          <WeaponCategory
-            key={category}
-            category={category as any}
-            weapons={weapons}
-            isChecked={isChecked}
-            onToggle={toggleCheck}
-            checkedCount={getCheckedCount(weapons.map((w) => w.id))}
-          />
-        ))}
+        <div className="space-y-2">
+          {activeWeapons.map((weapon) => (
+            <WeaponItem
+              key={weapon.id}
+              weapon={weapon}
+              checked={isChecked(weapon.id)}
+              onToggle={toggleCheck}
+            />
+          ))}
 
-        {Object.keys(filteredWeaponsByCategory).length === 0 && (
-          <div className="text-center text-gray-500 mt-8">
-            該当する武器がありません
-          </div>
-        )}
+          {activeWeapons.length === 0 && (
+            <div className="text-center text-gray-500 mt-8">
+              武器がありません
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
