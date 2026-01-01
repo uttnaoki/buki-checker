@@ -1,20 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import {
-  Crosshair,
-  Flame,
-  Circle,
-  Paintbrush,
-  Target,
-  Droplet,
-  Loader2,
-  MoveHorizontal,
-  Shield,
-  Zap,
-  Wind,
-  Award,
-} from 'lucide-react';
+import Image from 'next/image';
 import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
 import { CATEGORY_LABELS } from '@/types/weapon.types';
 import { getWeaponsByCategory } from '@/data/weapons';
@@ -22,19 +9,19 @@ import { useWeaponChecks } from '@/hooks/useWeaponChecks';
 import { WeaponItem } from './WeaponItem';
 
 // カテゴリアイコンのマッピング
-const CATEGORY_ICONS: Record<WeaponCategoryType, React.ComponentType<{ className?: string }>> = {
-  shooter: Crosshair,
-  blaster: Flame,
-  roller: Circle,
-  brush: Paintbrush,
-  charger: Target,
-  slosher: Droplet,
-  spinner: Loader2,
-  maneuver: MoveHorizontal,
-  shelter: Shield,
-  stringer: Zap,
-  wiper: Wind,
-  grizzco: Award,
+const CATEGORY_ICON_PATHS: Record<WeaponCategoryType, string> = {
+  shooter: '/icons/categories/shooter.png',
+  blaster: '/icons/categories/blaster.png',
+  roller: '/icons/categories/roller.png',
+  brush: '/icons/categories/brush.png',
+  charger: '/icons/categories/charger.png',
+  slosher: '/icons/categories/slosher.png',
+  spinner: '/icons/categories/splatling.png',
+  maneuver: '/icons/categories/dualie.png',
+  shelter: '/icons/categories/brella.png',
+  stringer: '/icons/categories/stringer.png',
+  wiper: '/icons/categories/splatana.png',
+  grizzco: '/icons/categories/grizzco.png',
 };
 
 export function WeaponList() {
@@ -138,26 +125,30 @@ export function WeaponList() {
               {allCategories.map((category) => {
                 const stats = categoryStats[category];
                 const isComplete = stats?.isComplete || false;
-                const CategoryIcon = CATEGORY_ICONS[category];
+                const iconPath = CATEGORY_ICON_PATHS[category];
                 return (
                   <button
                     key={category}
                     onClick={() => setActiveCategory(category)}
                     className={`
-                      px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap
-                      flex items-center gap-2
+                      p-2 rounded-lg transition-colors
+                      flex items-center justify-center
                       ${
                         activeCategory === category
-                          ? 'bg-green-600 text-white'
+                          ? 'bg-green-600'
                           : isComplete
-                          ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                          ? 'bg-green-100 hover:bg-green-200'
+                          : 'bg-gray-200 hover:bg-gray-300'
                       }
                     `}
                   >
-                    <CategoryIcon className="w-4 h-4" />
-                    {isComplete && '✓ '}
-                    {CATEGORY_LABELS[category]}
+                    <Image
+                      src={iconPath}
+                      alt={CATEGORY_LABELS[category]}
+                      width={32}
+                      height={32}
+                      className="w-8 h-8"
+                    />
                   </button>
                 );
               })}
