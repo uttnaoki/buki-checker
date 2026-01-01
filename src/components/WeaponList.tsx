@@ -28,9 +28,25 @@ export function WeaponList() {
   const { isLoaded, toggleCheck, isChecked, getCheckedCount } = useWeaponChecks();
   const weaponsByCategory = useMemo(() => getWeaponsByCategory(), []);
 
+  // 全武器リスト
+  const allWeapons = useMemo(() => {
+    return Object.values(weaponsByCategory).flat();
+  }, [weaponsByCategory]);
+
   // カテゴリごとのチェック状況を計算
   const categoryStats = useMemo(() => {
     const stats: Record<string, { total: number; checked: number; isComplete: boolean }> = {};
+
+    // 全体の統計
+    const totalWeapons = allWeapons.length;
+    const totalChecked = getCheckedCount(allWeapons.map((w) => w.id));
+    stats['all'] = {
+      total: totalWeapons,
+      checked: totalChecked,
+      isComplete: totalWeapons > 0 && totalChecked === totalWeapons,
+    };
+
+    // カテゴリ別の統計
     Object.entries(weaponsByCategory).forEach(([category, weapons]) => {
       const total = weapons.length;
       const checked = getCheckedCount(weapons.map((w) => w.id));
@@ -41,13 +57,13 @@ export function WeaponList() {
       };
     });
     return stats;
-  }, [weaponsByCategory, getCheckedCount]);
+  }, [weaponsByCategory, allWeapons, getCheckedCount]);
 
-  // カテゴリの並び替え: grizzco → 未完了 → 完了済み
+  // カテゴリの並び替え: all → grizzco → 未完了 → 完了済み
   const allCategories = useMemo(() => {
     const categories = Object.keys(weaponsByCategory) as WeaponCategoryType[];
-    return categories.sort((a, b) => {
-      // grizzco を最初に
+    const sorted = categories.sort((a, b) => {
+      // grizzco を2番目に
       if (a === 'grizzco') return -1;
       if (b === 'grizzco') return 1;
 
@@ -61,14 +77,16 @@ export function WeaponList() {
       // 同じ完了状況の場合は元の順序を維持
       return 0;
     });
+    // all を先頭に追加
+    return ['all' as const, ...sorted];
   }, [weaponsByCategory, categoryStats]);
 
-  const [activeCategory, setActiveCategory] = useState<WeaponCategoryType>(allCategories[0]);
+  const [activeCategory, setActiveCategory] = useState<WeaponCategoryType | 'all'>('all');
 
   // アクティブなカテゴリの武器
   const activeWeapons = useMemo(
-    () => weaponsByCategory[activeCategory] || [],
-    [weaponsByCategory, activeCategory]
+    () => (activeCategory === 'all' ? allWeapons : weaponsByCategory[activeCategory] || []),
+    [activeCategory, allWeapons, weaponsByCategory]
   );
 
   if (!isLoaded) {
@@ -125,30 +143,37 @@ export function WeaponList() {
               {allCategories.map((category) => {
                 const stats = categoryStats[category];
                 const isComplete = stats?.isComplete || false;
-                const iconPath = CATEGORY_ICON_PATHS[category];
+                const isAllCategory = category === 'all';
+                const iconPath = isAllCategory ? null : CATEGORY_ICON_PATHS[category as WeaponCategoryType];
+
                 return (
                   <button
                     key={category}
-                    onClick={() => setActiveCategory(category)}
+                    onClick={() => setActiveCategory(category as WeaponCategoryType | 'all')}
                     className={`
-                      p-2 rounded-lg transition-colors
+                      rounded-lg transition-colors
                       flex items-center justify-center
+                      ${isAllCategory ? 'px-4 py-2' : 'p-2'}
                       ${
                         activeCategory === category
-                          ? 'bg-green-600'
+                          ? 'bg-green-600 text-white'
                           : isComplete
                           ? 'bg-green-100 hover:bg-green-200'
                           : 'bg-gray-200 hover:bg-gray-300'
                       }
                     `}
                   >
-                    <Image
-                      src={iconPath}
-                      alt={CATEGORY_LABELS[category]}
-                      width={32}
-                      height={32}
-                      className="w-8 h-8"
-                    />
+                    {isAllCategory ? (
+                      <span className="font-bold text-sm">ALL</span>
+                    ) : (
+                      <Image
+                        src={iconPath!}
+                        alt={CATEGORY_LABELS[category as WeaponCategoryType]}
+                        width={32}
+                        height={32}
+                        className="w-8 h-8"
+                      />
+                    )}
                   </button>
                 );
               })}
