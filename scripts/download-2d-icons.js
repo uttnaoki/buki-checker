@@ -27,6 +27,7 @@ const weaponMapping = {
   'nova-blaster': 'Luna Blaster',
   'clash-blaster': 'Clash Blaster',
   'rapid-blaster': 'Rapid Blaster',
+  'rapid-blaster-elite': 'Rapid Blaster Pro',
   'long-blaster': 'Range Blaster',
   's-blast92': 'S-BLAST \'92',
 

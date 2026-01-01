@@ -124,6 +124,12 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/rapid-blaster.png',
   },
   {
+    id: 'rapid-blaster-elite',
+    name: 'ラピッドブラスターエリート',
+    category: 'blaster',
+    iconUrl: '/images/weapons/rapid-blaster-elite.png',
+  },
+  {
     id: 'long-blaster',
     name: 'ロングブラスター',
     category: 'blaster',
@@ -163,7 +169,7 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: 'variable-roller',
-    name: 'バリアブルローラー',
+    name: 'ヴァリアブルローラー',
     category: 'roller',
     iconUrl: '/images/weapons/variable-roller.png',
   },

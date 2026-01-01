@@ -4,9 +4,9 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 
 describe('WEAPONS データ検証', () => {
-  it('武器数が70個である', () => {
-    expect(WEAPONS).toHaveLength(70);
-    expect(TOTAL_WEAPONS).toBe(70);
+  it('武器数が71個である', () => {
+    expect(WEAPONS).toHaveLength(71);
+    expect(TOTAL_WEAPONS).toBe(71);
   });
 
   it('重複したIDが存在しない', () => {
@@ -50,7 +50,7 @@ describe('WEAPONS データ検証', () => {
   describe('カテゴリごとの武器数', () => {
     const expectedCounts = {
       shooter: 14,
-      blaster: 6,
+      blaster: 7,
       roller: 5,
       brush: 3,
       charger: 6,
@@ -93,6 +93,7 @@ describe('WEAPONS データ検証', () => {
       'nova-blaster',
       'clash-blaster',
       'rapid-blaster',
+      'rapid-blaster-elite',
       'long-blaster',
       's-blast92',
       // ローラー
@@ -191,6 +192,7 @@ describe('WEAPONS データ検証', () => {
       'nova-blaster',
       'clash-blaster',
       'rapid-blaster',
+      'rapid-blaster-elite',
       'long-blaster',
       's-blast92',
       // ローラー
