@@ -1,39 +1,15 @@
 'use client';
 
-import { useMemo } from 'react';
 import Image from 'next/image';
 import { WEAPONS } from '@/data/weapons';
 import { useWeaponChecks } from '@/hooks/useWeaponChecks';
 import { BottomNav } from '@/components/BottomNav';
 
-// 武器の位置を事前に計算（ランダムだが固定）
-function generatePositions(count: number, seed: number = 42) {
-  const positions: { x: number; y: number; rotate: number }[] = [];
-  let s = seed;
-
-  const random = () => {
-    s = (s * 9301 + 49297) % 233280;
-    return s / 233280;
-  };
-
-  for (let i = 0; i < count; i++) {
-    positions.push({
-      x: random() * 80 + 10, // 10% - 90%
-      y: random() * 70 + 15, // 15% - 85%
-      rotate: random() * 40 - 20, // -20 ~ 20度
-    });
-  }
-  return positions;
-}
+// グリッドの列数
+const GRID_COLS = 9;
 
 export default function ResultPage() {
   const { isLoaded, isChecked, getCheckedCount } = useWeaponChecks();
-
-  const positions = useMemo(() => generatePositions(WEAPONS.length), []);
-
-  const uncheckedWeapons = useMemo(() => {
-    return WEAPONS.filter((weapon) => !isChecked(weapon.id));
-  }, [isChecked]);
 
   const totalWeapons = WEAPONS.length;
   const checkedCount = getCheckedCount();
@@ -96,32 +72,35 @@ export default function ResultPage() {
             priority
           />
 
-          {/* 未チェックの武器アイコン */}
-          {uncheckedWeapons.map((weapon) => {
-            const weaponIndex = WEAPONS.findIndex((w) => w.id === weapon.id);
-            const pos = positions[weaponIndex];
+          {/* 武器アイコングリッド */}
+          <div
+            className="absolute inset-0 grid gap-0"
+            style={{
+              gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)`,
+            }}
+          >
+            {WEAPONS.map((weapon) => {
+              const checked = isChecked(weapon.id);
 
-            return (
-              <div
-                key={weapon.id}
-                className="absolute w-12 h-12 transition-all duration-300"
-                style={{
-                  left: `${pos.x}%`,
-                  top: `${pos.y}%`,
-                  transform: `translate(-50%, -50%) rotate(${pos.rotate}deg)`,
-                }}
-              >
-                <div className="relative w-full h-full bg-gray-800/80 rounded-lg p-1 shadow-md">
-                  <Image
-                    src={weapon.iconUrl || '/images/weapons/placeholder.png'}
-                    alt={weapon.name}
-                    fill
-                    className="object-contain p-1"
-                  />
+              return (
+                <div
+                  key={weapon.id}
+                  className={`relative aspect-square transition-opacity duration-300 ${
+                    checked ? 'opacity-0' : 'opacity-100'
+                  }`}
+                >
+                  <div className="absolute inset-0 bg-gray-800/90 m-[1px]">
+                    <Image
+                      src={weapon.iconUrl || '/images/weapons/placeholder.png'}
+                      alt={weapon.name}
+                      fill
+                      className="object-contain p-0.5"
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
 
           {/* コンプリート時のオーバーレイ */}
           {isComplete && (
