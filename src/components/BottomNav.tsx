@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Settings } from 'lucide-react';
+import { Home, Trophy, Settings } from 'lucide-react';
 
 type NavItem = {
   href: string;
@@ -12,6 +12,7 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/', label: 'ホーム', icon: Home },
+  { href: '/result', label: 'リザルト', icon: Trophy },
   { href: '/settings', label: '設定', icon: Settings },
 ];
 
