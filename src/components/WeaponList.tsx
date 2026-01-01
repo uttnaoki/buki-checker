@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Settings } from 'lucide-react';
+import { Home, Settings } from 'lucide-react';
 import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
 import { CATEGORY_LABELS } from '@/types/weapon.types';
 import { getWeaponsByCategory } from '@/data/weapons';
@@ -206,7 +206,14 @@ export function WeaponList() {
 
       {/* ボトムバー */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-inset-bottom">
-        <div className="max-w-md mx-auto px-4 py-3 flex justify-end">
+        <div className="max-w-md mx-auto px-4 py-3 flex justify-between">
+          <Link
+            href="/"
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="ホーム"
+          >
+            <Home className="w-6 h-6 text-gray-700" />
+          </Link>
           <Link
             href="/settings"
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
