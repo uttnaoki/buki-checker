@@ -12,7 +12,7 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/', label: 'ホーム', icon: Home },
-  { href: '/result', label: 'リザルト', icon: Trophy },
+  { href: '/scratch', label: 'スクラッチ', icon: Trophy },
   { href: '/settings', label: '設定', icon: Settings },
 ];
 

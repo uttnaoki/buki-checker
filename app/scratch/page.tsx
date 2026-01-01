@@ -42,7 +42,7 @@ export default function ResultPage() {
       {/* ヘッダー */}
       <header className="sticky top-0 z-10 bg-white shadow-sm">
         <div className="max-w-md mx-auto p-4">
-          <h1 className="text-xl font-bold text-gray-900">リザルト</h1>
+          <h1 className="text-xl font-bold text-gray-900">スクラッチ</h1>
           <p className="text-sm text-gray-600 mt-1">
             {isComplete
               ? 'コンプリート！'
