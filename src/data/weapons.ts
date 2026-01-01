@@ -98,13 +98,6 @@ export const WEAPONS: Weapon[] = [
     category: 'shooter',
     iconUrl: '/images/weapons/bottlegeyser.png',
   },
-  {
-    id: 'splattery',
-    name: 'スパッタリー',
-    category: 'shooter',
-    iconUrl: '/images/weapons/splattery.png',
-  },
-
   // ブラスター
   {
     id: 'hot-blaster',
@@ -226,6 +219,12 @@ export const WEAPONS: Weapon[] = [
     category: 'charger',
     iconUrl: '/images/weapons/14shiki-taketsutsutou.png',
   },
+  {
+    id: 'r-pen-5h',
+    name: 'R-PEN/5H',
+    category: 'charger',
+    iconUrl: '/images/weapons/r-pen-5h.png',
+  },
 
   // スロッシャー
   {
@@ -258,6 +257,12 @@ export const WEAPONS: Weapon[] = [
     category: 'slosher',
     iconUrl: '/images/weapons/explosher.png',
   },
+  {
+    id: 'dread-wringer',
+    name: 'モップリン',
+    category: 'slosher',
+    iconUrl: '/images/weapons/dread-wringer.png',
+  },
 
   // スピナー
   {
@@ -280,7 +285,7 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: 'kugelschreiber',
-    name: 'クーゲルシライバー',
+    name: 'クーゲルシュライバー',
     category: 'spinner',
     iconUrl: '/images/weapons/kugelschreiber.png',
   },
@@ -289,6 +294,12 @@ export const WEAPONS: Weapon[] = [
     name: 'ノーチラス',
     category: 'spinner',
     iconUrl: '/images/weapons/nautilus.png',
+  },
+  {
+    id: 'heavy-edit-splatling',
+    name: 'イグザミナー',
+    category: 'spinner',
+    iconUrl: '/images/weapons/heavy-edit-splatling.png',
   },
 
   // マニューバー
@@ -317,10 +328,16 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/quad-hopper.png',
   },
   {
-    id: 'spy-gadget',
-    name: 'スパイガジェット',
+    id: 'splattery',
+    name: 'スパッタリー',
     category: 'maneuver',
-    iconUrl: '/images/weapons/spy-gadget.png',
+    iconUrl: '/images/weapons/splattery.png',
+  },
+  {
+    id: 'guen-ff',
+    name: 'ガエンFF',
+    category: 'maneuver',
+    iconUrl: '/images/weapons/guen-ff.png',
   },
 
   // シェルター
@@ -338,9 +355,15 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: '24shiki-harikae-gasa',
-    name: '24式張替傘',
+    name: 'スパイガジェット',
     category: 'shelter',
     iconUrl: '/images/weapons/24shiki-harikae-gasa.png',
+  },
+  {
+    id: 'recycled-brella-24',
+    name: '24式張替傘',
+    category: 'shelter',
+    iconUrl: '/images/weapons/recycled-brella-24.png',
   },
 
   // ストリンガー
@@ -356,6 +379,12 @@ export const WEAPONS: Weapon[] = [
     category: 'stringer',
     iconUrl: '/images/weapons/lact-450.png',
   },
+  {
+    id: 'wellstring-v',
+    name: 'フルイドV',
+    category: 'stringer',
+    iconUrl: '/images/weapons/wellstring-v.png',
+  },
 
   // ワイパー
   {
@@ -369,6 +398,12 @@ export const WEAPONS: Weapon[] = [
     name: 'ジムワイパー',
     category: 'wiper',
     iconUrl: '/images/weapons/jimwiper.png',
+  },
+  {
+    id: 'mint-decavitator',
+    name: 'デンタルワイパーミント',
+    category: 'wiper',
+    iconUrl: '/images/weapons/mint-decavitator.png',
   },
 
   // クマサン印（サーモンラン専用武器）

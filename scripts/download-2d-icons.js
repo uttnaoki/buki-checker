@@ -16,7 +16,7 @@ const weaponMapping = {
   '96gal': '.96 Gal',
   'prime-shooter': 'Splattershot Pro',
   'jet-sweeper': 'Jet Squelcher',
-  'space-shooter': 'Squeezer',
+  'space-shooter': 'Splattershot Nova',
   'l3-reelgun': 'L-3 Nozzlenose',
   'h3-reelgun': 'H-3 Nozzlenose',
   'bottlegeyser': 'Squeezer',
@@ -34,8 +34,8 @@ const weaponMapping = {
   'splat-roller': 'Splat Roller',
   'carbon-roller': 'Carbon Roller',
   'dynamo-roller': 'Dynamo Roller',
-  'wide-roller': 'Flingza Roller',
-  'variable-roller': 'Big Swig Roller',
+  'wide-roller': 'Big Swig Roller',
+  'variable-roller': 'Flingza Roller',
 
   // フデ
   'pablo': 'Inkbrush',
@@ -48,6 +48,7 @@ const weaponMapping = {
   'eliter-4k': 'E-liter 4K',
   'soychooter': 'Goo Tuber',
   '14shiki-taketsutsutou': 'Bamboozler 14 Mk I',
+  'r-pen-5h': 'Snipewriter 5H',
 
   // スロッシャー
   'bucketslosher': 'Slosher',
@@ -55,6 +56,7 @@ const weaponMapping = {
   'screw-slosher': 'Sloshing Machine',
   'overflow-slosher': 'Bloblobber',
   'explosher': 'Explosher',
+  'dread-wringer': 'Dread Wringer',
 
   // スピナー
   'barrel-spinner': 'Heavy Splatling',
@@ -62,26 +64,31 @@ const weaponMapping = {
   'hydra-splatling': 'Hydra Splatling',
   'kugelschreiber': 'Ballpoint Splatling',
   'nautilus': 'Nautilus 47',
+  'heavy-edit-splatling': 'Heavy Edit Splatling',
 
   // マニューバー
   'splat-maneuver': 'Splat Dualies',
   'dual-sweeper': 'Dualie Squelchers',
   'kelvin525': 'Glooga Dualies',
   'quad-hopper': 'Dark Tetra Dualies',
-  'spy-gadget': 'Douser Dualies FF',
+  'splattery': 'Dapple Dualies',
+  'guen-ff': 'Douser Dualies FF',
 
   // シェルター
   'parashelter': 'Splat Brella',
   'campingshelter': 'Tenta Brella',
   '24shiki-harikae-gasa': 'Undercover Brella',
+  'recycled-brella-24': 'Recycled Brella 24 Mk I',
 
   // ストリンガー
   'tristringer': 'Tri-Stringer',
   'lact-450': 'REEF-LUX 450',
+  'wellstring-v': 'Wellstring V',
 
   // ワイパー
   'drivewiper': 'Splatana Wiper',
   'jimwiper': 'Splatana Stamper',
+  'mint-decavitator': 'Mint Decavitator',
 
   // クマサン印
   'grizzco-blaster': 'Grizzco Blaster',
