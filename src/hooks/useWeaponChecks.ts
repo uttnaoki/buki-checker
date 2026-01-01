@@ -131,12 +131,23 @@ export function useWeaponChecks() {
     [checks]
   );
 
+  // 全てのデータを完全に削除
+  const clearAll = useCallback(() => {
+    setChecks({});
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.error('Failed to clear weapon checks:', error);
+    }
+  }, []);
+
   return {
     checks,
     isLoaded,
     toggleCheck,
     checkAll,
     uncheckAll,
+    clearAll,
     isChecked,
     getCheckedCount,
   };

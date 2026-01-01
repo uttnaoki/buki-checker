@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Settings } from 'lucide-react';
 import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
 import { CATEGORY_LABELS } from '@/types/weapon.types';
 import { getWeaponsByCategory } from '@/data/weapons';
@@ -183,7 +185,7 @@ export function WeaponList() {
       </header>
 
       {/* 武器リスト */}
-      <main className="max-w-md mx-auto p-4">
+      <main className="max-w-md mx-auto p-4 pb-20">
         <div className="grid grid-cols-3 gap-2">
           {activeWeapons.map((weapon) => (
             <WeaponItem
@@ -201,6 +203,19 @@ export function WeaponList() {
           </div>
         )}
       </main>
+
+      {/* ボトムバー */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-inset-bottom">
+        <div className="max-w-md mx-auto px-4 py-3 flex justify-end">
+          <Link
+            href="/settings"
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="設定"
+          >
+            <Settings className="w-6 h-6 text-gray-700" />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
