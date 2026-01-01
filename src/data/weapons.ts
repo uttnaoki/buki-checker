@@ -98,13 +98,6 @@ export const WEAPONS: Weapon[] = [
     category: 'shooter',
     iconUrl: '/images/weapons/bottlegeyser.png',
   },
-  {
-    id: 'splattery',
-    name: 'スパッタリー',
-    category: 'shooter',
-    iconUrl: '/images/weapons/splattery.png',
-  },
-
   // ブラスター
   {
     id: 'hot-blaster',
@@ -266,7 +259,7 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: 'dread-wringer',
-    name: 'エクスプレッサー',
+    name: 'モップリン',
     category: 'slosher',
     iconUrl: '/images/weapons/dread-wringer.png',
   },
@@ -292,7 +285,7 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: 'kugelschreiber',
-    name: 'クーゲルシライバー',
+    name: 'クーゲルシュライバー',
     category: 'spinner',
     iconUrl: '/images/weapons/kugelschreiber.png',
   },
@@ -335,10 +328,16 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/quad-hopper.png',
   },
   {
-    id: 'spy-gadget',
-    name: 'スパイガジェット',
+    id: 'splattery',
+    name: 'スパッタリー',
     category: 'maneuver',
-    iconUrl: '/images/weapons/spy-gadget.png',
+    iconUrl: '/images/weapons/splattery.png',
+  },
+  {
+    id: 'guen-ff',
+    name: 'ガエンFF',
+    category: 'maneuver',
+    iconUrl: '/images/weapons/guen-ff.png',
   },
 
   // シェルター
@@ -356,13 +355,13 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: '24shiki-harikae-gasa',
-    name: '24式張替傘',
+    name: 'スパイガジェット',
     category: 'shelter',
     iconUrl: '/images/weapons/24shiki-harikae-gasa.png',
   },
   {
     id: 'recycled-brella-24',
-    name: '24式張替傘・甲',
+    name: '24式張替傘',
     category: 'shelter',
     iconUrl: '/images/weapons/recycled-brella-24.png',
   },

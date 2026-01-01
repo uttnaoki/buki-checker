@@ -16,7 +16,7 @@ const weaponMapping = {
   '96gal': '.96 Gal',
   'prime-shooter': 'Splattershot Pro',
   'jet-sweeper': 'Jet Squelcher',
-  'space-shooter': 'Squeezer',
+  'space-shooter': 'Splattershot Nova',
   'l3-reelgun': 'L-3 Nozzlenose',
   'h3-reelgun': 'H-3 Nozzlenose',
   'bottlegeyser': 'Squeezer',
@@ -34,8 +34,8 @@ const weaponMapping = {
   'splat-roller': 'Splat Roller',
   'carbon-roller': 'Carbon Roller',
   'dynamo-roller': 'Dynamo Roller',
-  'wide-roller': 'Flingza Roller',
-  'variable-roller': 'Big Swig Roller',
+  'wide-roller': 'Big Swig Roller',
+  'variable-roller': 'Flingza Roller',
 
   // フデ
   'pablo': 'Inkbrush',
@@ -71,7 +71,8 @@ const weaponMapping = {
   'dual-sweeper': 'Dualie Squelchers',
   'kelvin525': 'Glooga Dualies',
   'quad-hopper': 'Dark Tetra Dualies',
-  'spy-gadget': 'Douser Dualies FF',
+  'splattery': 'Dapple Dualies',
+  'guen-ff': 'Douser Dualies FF',
 
   // シェルター
   'parashelter': 'Splat Brella',
