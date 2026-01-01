@@ -226,6 +226,12 @@ export const WEAPONS: Weapon[] = [
     category: 'charger',
     iconUrl: '/images/weapons/14shiki-taketsutsutou.png',
   },
+  {
+    id: 'r-pen-5h',
+    name: 'R-PEN/5H',
+    category: 'charger',
+    iconUrl: '/images/weapons/r-pen-5h.png',
+  },
 
   // スロッシャー
   {
@@ -258,6 +264,12 @@ export const WEAPONS: Weapon[] = [
     category: 'slosher',
     iconUrl: '/images/weapons/explosher.png',
   },
+  {
+    id: 'dread-wringer',
+    name: 'エクスプレッサー',
+    category: 'slosher',
+    iconUrl: '/images/weapons/dread-wringer.png',
+  },
 
   // スピナー
   {
@@ -289,6 +301,12 @@ export const WEAPONS: Weapon[] = [
     name: 'ノーチラス',
     category: 'spinner',
     iconUrl: '/images/weapons/nautilus.png',
+  },
+  {
+    id: 'heavy-edit-splatling',
+    name: 'イグザミナー',
+    category: 'spinner',
+    iconUrl: '/images/weapons/heavy-edit-splatling.png',
   },
 
   // マニューバー
@@ -342,6 +360,12 @@ export const WEAPONS: Weapon[] = [
     category: 'shelter',
     iconUrl: '/images/weapons/24shiki-harikae-gasa.png',
   },
+  {
+    id: 'recycled-brella-24',
+    name: '24式張替傘・甲',
+    category: 'shelter',
+    iconUrl: '/images/weapons/recycled-brella-24.png',
+  },
 
   // ストリンガー
   {
@@ -356,6 +380,12 @@ export const WEAPONS: Weapon[] = [
     category: 'stringer',
     iconUrl: '/images/weapons/lact-450.png',
   },
+  {
+    id: 'wellstring-v',
+    name: 'フルイドV',
+    category: 'stringer',
+    iconUrl: '/images/weapons/wellstring-v.png',
+  },
 
   // ワイパー
   {
@@ -369,6 +399,12 @@ export const WEAPONS: Weapon[] = [
     name: 'ジムワイパー',
     category: 'wiper',
     iconUrl: '/images/weapons/jimwiper.png',
+  },
+  {
+    id: 'mint-decavitator',
+    name: 'デンタルワイパーミント',
+    category: 'wiper',
+    iconUrl: '/images/weapons/mint-decavitator.png',
   },
 
   // クマサン印（サーモンラン専用武器）

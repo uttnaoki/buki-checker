@@ -48,6 +48,7 @@ const weaponMapping = {
   'eliter-4k': 'E-liter 4K',
   'soychooter': 'Goo Tuber',
   '14shiki-taketsutsutou': 'Bamboozler 14 Mk I',
+  'r-pen-5h': 'Snipewriter 5H',
 
   // スロッシャー
   'bucketslosher': 'Slosher',
@@ -55,6 +56,7 @@ const weaponMapping = {
   'screw-slosher': 'Sloshing Machine',
   'overflow-slosher': 'Bloblobber',
   'explosher': 'Explosher',
+  'dread-wringer': 'Dread Wringer',
 
   // スピナー
   'barrel-spinner': 'Heavy Splatling',
@@ -62,6 +64,7 @@ const weaponMapping = {
   'hydra-splatling': 'Hydra Splatling',
   'kugelschreiber': 'Ballpoint Splatling',
   'nautilus': 'Nautilus 47',
+  'heavy-edit-splatling': 'Heavy Edit Splatling',
 
   // マニューバー
   'splat-maneuver': 'Splat Dualies',
@@ -74,14 +77,17 @@ const weaponMapping = {
   'parashelter': 'Splat Brella',
   'campingshelter': 'Tenta Brella',
   '24shiki-harikae-gasa': 'Undercover Brella',
+  'recycled-brella-24': 'Recycled Brella 24 Mk I',
 
   // ストリンガー
   'tristringer': 'Tri-Stringer',
   'lact-450': 'REEF-LUX 450',
+  'wellstring-v': 'Wellstring V',
 
   // ワイパー
   'drivewiper': 'Splatana Wiper',
   'jimwiper': 'Splatana Stamper',
+  'mint-decavitator': 'Mint Decavitator',
 
   // クマサン印
   'grizzco-blaster': 'Grizzco Blaster',
