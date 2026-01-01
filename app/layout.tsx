@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Salmon Run Weapon Checker",
-  description: "スプラトゥーン3 サーモンラン 武器チェッカー - ランダム編成で支給された武器を記録・管理",
+  title: "サーモンラン　ブキチェッカー",
+  description: "スプラトゥーン3 サーモンラン　ブキチェッカー - ランダム編成で支給されたブキを記録・管理",
 };
 
 export default function RootLayout({

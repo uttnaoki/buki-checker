@@ -107,9 +107,9 @@ export function WeaponList() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-xl font-bold text-gray-900 tracking-wide">
-                SALMON RUN
+                サーモンラン
               </h1>
-              <p className="text-xs text-gray-600 tracking-wider">WEAPON CHECKER</p>
+              <p className="text-xs text-gray-600 tracking-wider">ブキチェッカー</p>
             </div>
             <div className="text-right">
               <div className="text-2xl font-bold text-green-600">
