@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import { useWeaponChecks } from '@/hooks/useWeaponChecks';
+import { BottomNav } from '@/components/BottomNav';
 import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
@@ -27,21 +26,12 @@ export default function SettingsPage() {
       {/* ヘッダー */}
       <header className="sticky top-0 z-10 bg-white shadow-sm">
         <div className="max-w-md mx-auto p-4">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="p-2 -ml-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="戻る"
-            >
-              <ArrowLeft className="w-5 h-5 text-gray-700" />
-            </Link>
-            <h1 className="text-xl font-bold text-gray-900">設定</h1>
-          </div>
+          <h1 className="text-xl font-bold text-gray-900">設定</h1>
         </div>
       </header>
 
       {/* コンテンツ */}
-      <main className="max-w-md mx-auto p-4">
+      <main className="max-w-md mx-auto p-4 pb-20">
         <div className="space-y-6">
           {/* データ管理セクション */}
           <section>
@@ -67,6 +57,8 @@ export default function SettingsPage() {
           </section>
         </div>
       </main>
+
+      <BottomNav />
     </div>
   );
 }
