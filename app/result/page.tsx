@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { WEAPONS } from '@/data/weapons';
 import { useWeaponChecks } from '@/hooks/useWeaponChecks';
@@ -10,11 +11,23 @@ const GRID_COLS = 9;
 
 export default function ResultPage() {
   const { isLoaded, isChecked, getCheckedCount } = useWeaponChecks();
+  const [showCompleteAnimation, setShowCompleteAnimation] = useState(false);
 
   const totalWeapons = WEAPONS.length;
   const checkedCount = getCheckedCount();
   const progressPercentage = totalWeapons > 0 ? (checkedCount / totalWeapons) * 100 : 0;
   const isComplete = checkedCount === totalWeapons;
+
+  // コンプリート時のアニメーション表示
+  useEffect(() => {
+    if (isLoaded && isComplete) {
+      setShowCompleteAnimation(true);
+      const timer = setTimeout(() => {
+        setShowCompleteAnimation(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded, isComplete]);
 
   if (!isLoaded) {
     return (
@@ -100,10 +113,18 @@ export default function ResultPage() {
             })}
           </div>
 
-          {/* コンプリート時のオーバーレイ */}
+          {/* コンプリート時のオーバーレイ（アニメーション） */}
           {isComplete && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-black/50 px-6 py-3 rounded-full">
+            <div
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
+                showCompleteAnimation ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <div
+                className={`bg-black/50 px-6 py-3 rounded-full transition-transform duration-500 ${
+                  showCompleteAnimation ? 'scale-100' : 'scale-75'
+                }`}
+              >
                 <span className="text-white text-2xl font-bold tracking-wider">
                   COMPLETE!
                 </span>

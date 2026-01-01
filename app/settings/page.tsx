@@ -68,28 +68,30 @@ export default function SettingsPage() {
             </div>
           </section>
 
-          {/* デバッグセクション */}
-          <section>
-            <h2 className="text-sm font-medium text-gray-700 mb-3">デバッグ</h2>
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <button
-                onClick={handleCheckAll}
-                disabled={allChecked}
-                className={`w-full px-4 py-4 text-left transition-colors ${
-                  allChecked
-                    ? 'bg-gray-50 cursor-not-allowed'
-                    : 'hover:bg-blue-50'
-                }`}
-              >
-                <div className={`font-medium ${allChecked ? 'text-gray-400' : 'text-blue-700'}`}>
-                  全件チェック
-                </div>
-                <div className={`text-xs mt-1 ${allChecked ? 'text-gray-400' : 'text-gray-600'}`}>
-                  全ての武器をチェック済みにします
-                </div>
-              </button>
-            </div>
-          </section>
+          {/* デバッグセクション（開発環境のみ） */}
+          {process.env.NODE_ENV === 'development' && (
+            <section>
+              <h2 className="text-sm font-medium text-gray-700 mb-3">デバッグ</h2>
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button
+                  onClick={handleCheckAll}
+                  disabled={allChecked}
+                  className={`w-full px-4 py-4 text-left transition-colors ${
+                    allChecked
+                      ? 'bg-gray-50 cursor-not-allowed'
+                      : 'hover:bg-blue-50'
+                  }`}
+                >
+                  <div className={`font-medium ${allChecked ? 'text-gray-400' : 'text-blue-700'}`}>
+                    全件チェック
+                  </div>
+                  <div className={`text-xs mt-1 ${allChecked ? 'text-gray-400' : 'text-gray-600'}`}>
+                    全ての武器をチェック済みにします
+                  </div>
+                </button>
+              </div>
+            </section>
+          )}
         </div>
       </main>
 
