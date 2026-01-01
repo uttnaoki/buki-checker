@@ -66,9 +66,7 @@ export default function ResultPage() {
             src="/images/complete.jpg"
             alt="コンプリート画像"
             fill
-            className={`object-cover transition-all duration-500 ${
-              isComplete ? 'blur-0 brightness-100' : 'blur-sm brightness-75'
-            }`}
+            className="object-cover"
             priority
           />
 
