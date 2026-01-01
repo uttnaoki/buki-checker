@@ -90,7 +90,7 @@ export function WeaponList() {
     <div className="min-h-screen bg-gray-50">
       {/* ヘッダー */}
       <header className="sticky top-0 z-10 bg-white shadow-sm">
-        <div className="p-4">
+        <div className="max-w-md mx-auto p-4">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-xl font-bold text-gray-900 tracking-wide">
@@ -158,7 +158,7 @@ export function WeaponList() {
       </header>
 
       {/* 武器リスト */}
-      <main className="p-4">
+      <main className="max-w-md mx-auto p-4">
         <div className="grid grid-cols-3 gap-2">
           {activeWeapons.map((weapon) => (
             <WeaponItem
