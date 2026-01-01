@@ -1,11 +1,41 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import {
+  Crosshair,
+  Flame,
+  Circle,
+  Paintbrush,
+  Target,
+  Droplet,
+  Loader2,
+  MoveHorizontal,
+  Shield,
+  Zap,
+  Wind,
+  Award,
+} from 'lucide-react';
 import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
 import { CATEGORY_LABELS } from '@/types/weapon.types';
 import { getWeaponsByCategory } from '@/data/weapons';
 import { useWeaponChecks } from '@/hooks/useWeaponChecks';
 import { WeaponItem } from './WeaponItem';
+
+// カテゴリアイコンのマッピング
+const CATEGORY_ICONS: Record<WeaponCategoryType, React.ComponentType<{ className?: string }>> = {
+  shooter: Crosshair,
+  blaster: Flame,
+  roller: Circle,
+  brush: Paintbrush,
+  charger: Target,
+  slosher: Droplet,
+  spinner: Loader2,
+  maneuver: MoveHorizontal,
+  shelter: Shield,
+  stringer: Zap,
+  wiper: Wind,
+  grizzco: Award,
+};
 
 export function WeaponList() {
   const { isLoaded, toggleCheck, isChecked, getCheckedCount } = useWeaponChecks();
@@ -108,12 +138,14 @@ export function WeaponList() {
               {allCategories.map((category) => {
                 const stats = categoryStats[category];
                 const isComplete = stats?.isComplete || false;
+                const CategoryIcon = CATEGORY_ICONS[category];
                 return (
                   <button
                     key={category}
                     onClick={() => setActiveCategory(category)}
                     className={`
                       px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap
+                      flex items-center gap-2
                       ${
                         activeCategory === category
                           ? 'bg-green-600 text-white'
@@ -123,6 +155,7 @@ export function WeaponList() {
                       }
                     `}
                   >
+                    <CategoryIcon className="w-4 h-4" />
                     {isComplete && '✓ '}
                     {CATEGORY_LABELS[category]}
                   </button>

@@ -1,0 +1,8 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#E5E7EB" rx="8"/>
+  <g transform="translate(50, 50)">
+    <path d="M -15,-20 L 15,-20 L 15,20 L -15,20 Z" fill="#9CA3AF" opacity="0.5"/>
+    <circle cx="0" cy="0" r="8" fill="#6B7280"/>
+  </g>
+  <text x="50" y="90" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#6B7280">武器</text>
+</svg>

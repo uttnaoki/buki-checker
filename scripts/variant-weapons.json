@@ -1,0 +1,72 @@
+[
+  {
+    "id": "wakaba-shooter",
+    "basicName": "Splattershot_Jr.",
+    "currentFile": "S3_Weapon_Main_Custom_Splattershot_Jr..png"
+  },
+  {
+    "id": "splattershot",
+    "basicName": "Splattershot",
+    "currentFile": "S3_Weapon_Main_Glamorz_Splattershot.png"
+  },
+  {
+    "id": "sharp-marker",
+    "basicName": "Splash-o-matic",
+    "currentFile": "S3_Weapon_Main_Neo_Splash-o-matic.png"
+  },
+  {
+    "id": "bold-marker",
+    "basicName": "Sploosh-o-matic",
+    "currentFile": "S3_Weapon_Main_Neo_Sploosh-o-matic_2D_Current.png"
+  },
+  {
+    "id": "prime-shooter",
+    "basicName": "Splattershot_Pro",
+    "currentFile": "S3_Weapon_Main_Forge_Splattershot_Pro.png"
+  },
+  {
+    "id": "space-shooter",
+    "basicName": "Squeezer",
+    "currentFile": "S3_Weapon_Main_Foil_Squeezer.png"
+  },
+  {
+    "id": "bottlegeyser",
+    "basicName": "Squeezer",
+    "currentFile": "S3_Weapon_Main_Foil_Squeezer.png"
+  },
+  {
+    "id": "long-blaster",
+    "basicName": "Range_Blaster",
+    "currentFile": "S3_Weapon_Main_Custom_Range_Blaster.png"
+  },
+  {
+    "id": "splat-roller",
+    "basicName": "Splat_Roller",
+    "currentFile": "S3_Weapon_Main_Krak-On_Splat_Roller.png"
+  },
+  {
+    "id": "hokusai",
+    "basicName": "Octobrush",
+    "currentFile": "S3_Weapon_Main_Cometz_Octobrush.png"
+  },
+  {
+    "id": "fincent",
+    "basicName": "Painbrush",
+    "currentFile": "S3_Weapon_Main_Charcoal_Decavitator.png"
+  },
+  {
+    "id": "splat-maneuver",
+    "basicName": "Splat_Dualies",
+    "currentFile": "S3_Weapon_Main_Enperry_Splat_Dualies.png"
+  },
+  {
+    "id": "tristringer",
+    "basicName": "Tri-Stringer",
+    "currentFile": "S3_Weapon_Main_Bulbz_Tri-Stringer.png"
+  },
+  {
+    "id": "lact-450",
+    "basicName": "REEF-LUX_450",
+    "currentFile": "S3_Weapon_Main_Custom_Wellstring_V.png"
+  }
+]
