@@ -5,7 +5,6 @@ import { WEAPONS, WEAPON_BY_ID, TOTAL_WEAPONS } from '@/data/weapons';
 
 // ストレージキー
 const STORAGE_KEY = 'weapon-checks';
-const OLD_STORAGE_KEY = 'splatoon3-salmon-run-weapon-checks';
 
 /**
  * 武器チェック状態を管理するカスタムフック
@@ -20,33 +19,10 @@ export function useWeaponChecks() {
   // ローカルストレージからデータを読み込み
   useEffect(() => {
     try {
-      // 新形式を確認
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const indices = decodeProgressToIndices(stored);
         setCheckedIndices(indices);
-      } else {
-        // 旧形式からのマイグレーション
-        const oldStored = localStorage.getItem(OLD_STORAGE_KEY);
-        if (oldStored) {
-          const parsed = JSON.parse(oldStored);
-          const indices = new Set<number>();
-          if (parsed.checks) {
-            for (const [id, state] of Object.entries(parsed.checks)) {
-              if ((state as { checked?: boolean }).checked) {
-                const weapon = WEAPON_BY_ID.get(id);
-                if (weapon) {
-                  indices.add(weapon.index);
-                }
-              }
-            }
-          }
-          setCheckedIndices(indices);
-          // 新形式で保存
-          saveIndicesToStorage(indices);
-          // 旧形式を削除
-          localStorage.removeItem(OLD_STORAGE_KEY);
-        }
       }
     } catch (error) {
       console.error('Failed to load weapon checks:', error);
