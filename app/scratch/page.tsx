@@ -52,7 +52,8 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 }
 
 export default function ResultPage() {
-  const { hasHydrated, checkedIndices, getEncodedProgress } = useWeaponCheckStore();
+  const { hasHydrated, checkedIndices, getEncodedProgress } =
+    useWeaponCheckStore();
   const [showCompleteAnimation, setShowCompleteAnimation] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
 
@@ -163,7 +164,7 @@ export default function ResultPage() {
         {/* プログレス */}
         <div className="mb-4">
           <div className="flex justify-between text-sm mb-1">
-            <span className="text-gray-600">進捗</span>
+            <span className="text-gray-600">達成度</span>
             <span className="font-bold text-green-600">
               {checkedCount} / {totalWeapons}
             </span>
