@@ -7,7 +7,7 @@ const BASE64URL_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
  * チェック済み武器IDのSetを短いBase64URL文字列にエンコード
  * 71ビット → 12文字
  */
-export function encodeProgress(checkedIds: Set<string>): string {
+export const encodeProgress = (checkedIds: Set<string>): string => {
   // 武器の順番に従って71ビットのバイナリを作成
   let binary = '';
   for (const weapon of WEAPONS) {
@@ -34,12 +34,12 @@ export function encodeProgress(checkedIds: Set<string>): string {
   }
 
   return result;
-}
+};
 
 /**
  * Base64URL文字列をチェック済み武器IDのSetにデコード
  */
-export function decodeProgress(encoded: string): Set<string> {
+export const decodeProgress = (encoded: string): Set<string> => {
   const checkedIds = new Set<string>();
 
   if (!encoded) {
@@ -78,13 +78,13 @@ export function decodeProgress(encoded: string): Set<string> {
   }
 
   return checkedIds;
-}
+};
 
 /**
  * 進捗状態を含む共有URLを生成
  */
-export function generateShareUrl(checkedIds: Set<string>): string {
+export const generateShareUrl = (checkedIds: Set<string>): string => {
   const encoded = encodeProgress(checkedIds);
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
   return `${baseUrl}/share?p=${encoded}`;
-}
+};

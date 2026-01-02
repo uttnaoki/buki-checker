@@ -85,9 +85,9 @@ export const WEAPONS: Weapon[] = CATEGORY_ORDER.flatMap(
 );
 
 // カテゴリごとに武器を取得
-export function getWeaponsByCategory() {
+export const getWeaponsByCategory = () => {
   return WEAPONS_BY_CATEGORY;
-}
+};
 
 // 武器の総数
 export const TOTAL_WEAPONS = WEAPONS.length;
@@ -103,11 +103,11 @@ export const WEAPON_BY_ID = new Map<string, Weapon>(
 );
 
 // index → id
-export function getWeaponIdByIndex(index: number): string | undefined {
+export const getWeaponIdByIndex = (index: number): string | undefined => {
   return WEAPON_BY_INDEX.get(index)?.id;
-}
+};
 
 // id → index
-export function getWeaponIndexById(id: string): number | undefined {
+export const getWeaponIndexById = (id: string): number | undefined => {
   return WEAPON_BY_ID.get(id)?.index;
-}
+};

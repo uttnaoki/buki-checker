@@ -12,7 +12,7 @@ type GridCell =
   | { type: 'empty' };
 
 // ブキを正方形グリッドに配置し、空きセルを中央に配置する
-function createGridCells(weapons: typeof WEAPONS): GridCell[] {
+const createGridCells = (weapons: typeof WEAPONS): GridCell[] => {
   const totalWeapons = weapons.length;
   const gridRows = GRID_COLS;
   const totalCells = GRID_COLS * gridRows;
@@ -43,7 +43,7 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 const gridCells = createGridCells(WEAPONS);
 
 // チェック済みアイテムの透明度を計算（進捗率に応じて変化）
-function calcCheckedOpacity(checkedCount: number, totalCount: number): number {
+const calcCheckedOpacity = (checkedCount: number, totalCount: number): number => {
   const rate = checkedCount / totalCount;
   if (rate <= 0.5) return 0.3;
   if (rate <= 0.75) return 0.2;
@@ -55,10 +55,10 @@ interface ScratchGridProps {
   showCompleteAnimation?: boolean;
 }
 
-export function ScratchGrid({
+export const ScratchGrid = ({
   checkedIds,
   showCompleteAnimation = false,
-}: ScratchGridProps) {
+}: ScratchGridProps) => {
   const isChecked = (id: string) => checkedIds.has(id);
   const isComplete = checkedIds.size === WEAPONS.length;
   const checkedOpacity = calcCheckedOpacity(checkedIds.size, WEAPONS.length);

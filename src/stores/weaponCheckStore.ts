@@ -7,7 +7,7 @@ const BASE64URL_CHARS =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
 // Set<number>をBase64URLにエンコード
-function encodeIndices(indices: Set<number>): string {
+const encodeIndices = (indices: Set<number>): string => {
   let binary = '';
   for (let i = 0; i < TOTAL_WEAPONS; i++) {
     binary += indices.has(i) ? '1' : '0';
@@ -30,10 +30,10 @@ function encodeIndices(indices: Set<number>): string {
   }
 
   return result;
-}
+};
 
 // Base64URLをSet<number>にデコード
-function decodeIndices(encoded: string): Set<number> {
+const decodeIndices = (encoded: string): Set<number> => {
   const indices = new Set<number>();
 
   if (!encoded) {
@@ -65,7 +65,7 @@ function decodeIndices(encoded: string): Set<number> {
   }
 
   return indices;
-}
+};
 
 interface WeaponCheckStore {
   checkedIndices: Set<number>;

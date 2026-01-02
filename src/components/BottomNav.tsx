@@ -16,7 +16,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/settings', label: '設定', icon: Settings },
 ];
 
-export function BottomNav() {
+export const BottomNav = () => {
   const pathname = usePathname();
 
   return (

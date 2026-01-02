@@ -9,7 +9,7 @@ interface WeaponItemProps {
   onToggle: (weaponId: string) => void;
 }
 
-export function WeaponItem({ weapon, checked, onToggle }: WeaponItemProps) {
+export const WeaponItem = ({ weapon, checked, onToggle }: WeaponItemProps) => {
   return (
     <button
       onClick={() => onToggle(weapon.id)}

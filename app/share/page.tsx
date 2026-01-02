@@ -10,7 +10,7 @@ import { DEFAULT_NAME } from '@/stores/settingsStore';
 import { ScratchGrid } from '@/components/ScratchGrid';
 import { ProgressBar } from '@/components/ProgressBar';
 
-function ShareContent() {
+const ShareContent = () => {
   const searchParams = useSearchParams();
   const progressParam = searchParams.get('p') || '';
   const name = searchParams.get('name') || DEFAULT_NAME;
@@ -65,7 +65,7 @@ function ShareContent() {
   );
 }
 
-export default function SharePage() {
+const SharePage = () => {
   return (
     <Suspense
       fallback={
@@ -77,4 +77,6 @@ export default function SharePage() {
       <ShareContent />
     </Suspense>
   );
-}
+};
+
+export default SharePage;

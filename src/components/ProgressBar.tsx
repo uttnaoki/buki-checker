@@ -4,11 +4,11 @@ interface ProgressBarProps {
   label?: string;
 }
 
-export function ProgressBar({
+export const ProgressBar = ({
   checkedCount,
   totalCount,
   label = '達成度',
-}: ProgressBarProps) {
+}: ProgressBarProps) => {
   const progressPercentage =
     totalCount > 0 ? (checkedCount / totalCount) * 100 : 0;
 

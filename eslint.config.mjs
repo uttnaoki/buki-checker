@@ -12,7 +12,16 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Scripts (CommonJS)
+    "scripts/**",
   ]),
+  {
+    rules: {
+      // arrow関数を優先
+      "func-style": ["error", "expression"],
+      "prefer-arrow-callback": "error",
+    },
+  },
 ]);
 
 export default eslintConfig;

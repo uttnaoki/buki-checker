@@ -25,7 +25,7 @@ const CATEGORY_ICON_PATHS: Record<WeaponCategoryType, string> = {
   grizzco: '/icons/categories/grizzco.png',
 };
 
-export function WeaponList() {
+export const WeaponList = () => {
   const { toggleCheck, checkedIndices, hasHydrated } = useWeaponCheckStore();
 
   // checkedIndicesから直接チェック状態を取得
