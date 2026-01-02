@@ -140,7 +140,7 @@ export function WeaponList() {
 
           {/* カテゴリタブ */}
           <div className="overflow-x-auto -mx-4 px-4">
-            <div className="flex gap-2 min-w-max">
+            <div className="flex gap-2 min-w-max pr-4">
               {allCategories.map((category) => {
                 const stats = categoryStats[category];
                 const isComplete = stats?.isComplete || false;
