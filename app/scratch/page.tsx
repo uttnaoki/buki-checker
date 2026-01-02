@@ -249,9 +249,7 @@ export default function ResultPage() {
 
         {/* 説明テキスト */}
         <p className="text-center text-sm text-gray-500 mt-4">
-          {isComplete
-            ? '全てのブキを支給されました！'
-            : 'ブキをチェックすると画像が見えてきます'}
+          {isComplete && '全てのブキを支給されました！'}
         </p>
       </main>
 
