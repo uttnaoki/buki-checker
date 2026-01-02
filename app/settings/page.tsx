@@ -62,7 +62,7 @@ export default function SettingsPage() {
                   全件削除
                 </div>
                 <div className={`text-xs mt-1 ${totalChecked === 0 ? 'text-gray-400' : 'text-gray-600'}`}>
-                  全ての武器のチェックを解除します
+                  全てのブキのチェックを解除します
                 </div>
               </button>
             </div>
@@ -86,7 +86,7 @@ export default function SettingsPage() {
                     全件チェック
                   </div>
                   <div className={`text-xs mt-1 ${allChecked ? 'text-gray-400' : 'text-gray-600'}`}>
-                    全ての武器をチェック済みにします
+                    全てのブキをチェック済みにします
                   </div>
                 </button>
               </div>

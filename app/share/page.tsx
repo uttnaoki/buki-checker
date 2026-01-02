@@ -16,7 +16,7 @@ type GridCell =
   | { type: 'weapon'; weapon: (typeof WEAPONS)[number] }
   | { type: 'empty' };
 
-// 武器を正方形グリッドに配置し、空きセルを中央に配置する
+// ブキを正方形グリッドに配置し、空きセルを中央に配置する
 function createGridCells(weapons: typeof WEAPONS): GridCell[] {
   const totalWeapons = weapons.length;
   const gridRows = GRID_COLS;
@@ -118,7 +118,7 @@ function ShareContent() {
             priority
           />
 
-          {/* 武器アイコングリッド */}
+          {/* ブキアイコングリッド */}
           <div
             className="absolute inset-0 grid gap-0"
             style={{
@@ -162,7 +162,7 @@ function ShareContent() {
 
         {/* 説明テキスト */}
         <p className="text-center text-sm text-gray-500 mt-4">
-          {isComplete && '全ての武器を支給されました！'}
+          {isComplete && '全てのブキを支給されました！'}
         </p>
       </main>
     </div>

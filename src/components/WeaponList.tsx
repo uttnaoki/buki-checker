@@ -208,7 +208,7 @@ export function WeaponList() {
 
         {activeWeapons.length === 0 && (
           <div className="text-center text-gray-500 mt-8">
-            武器がありません
+            ブキがありません
           </div>
         )}
       </main>

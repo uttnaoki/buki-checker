@@ -15,7 +15,7 @@ type GridCell =
   | { type: 'weapon'; weapon: (typeof WEAPONS)[number] }
   | { type: 'empty' };
 
-// 武器を正方形グリッドに配置し、空きセルを中央に配置する
+// ブキを正方形グリッドに配置し、空きセルを中央に配置する
 function createGridCells(weapons: typeof WEAPONS): GridCell[] {
   const totalWeapons = weapons.length;
   // 正方形グリッドに必要な行数（列数と同じ）
@@ -24,7 +24,7 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
   const emptyCells = totalCells - totalWeapons;
 
   if (emptyCells <= 0) {
-    // 空きセルがない場合はそのまま武器を返す
+    // 空きセルがない場合はそのままブキを返す
     return weapons.map((weapon) => ({ type: 'weapon', weapon }));
   }
 
@@ -33,7 +33,7 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 
   const cells: GridCell[] = [];
 
-  // 前半の武器
+  // 前半のブキ
   for (let i = 0; i < weaponsBefore; i++) {
     cells.push({ type: 'weapon', weapon: weapons[i] });
   }
@@ -43,7 +43,7 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
     cells.push({ type: 'empty' });
   }
 
-  // 後半の武器
+  // 後半のブキ
   for (let i = weaponsBefore; i < totalWeapons; i++) {
     cells.push({ type: 'weapon', weapon: weapons[i] });
   }
@@ -89,7 +89,7 @@ export default function ResultPage() {
       try {
         await navigator.share({
           title: 'ブキチェッカー - スクラッチ進捗',
-          text: `${checkedCount}/${totalWeapons}種類の武器をチェックしました！`,
+          text: `${checkedCount}/${totalWeapons}種類のブキをチェックしました！`,
           url: shareUrl,
         });
         return;
@@ -191,7 +191,7 @@ export default function ResultPage() {
             priority
           />
 
-          {/* 武器アイコングリッド */}
+          {/* ブキアイコングリッド */}
           <div
             className="absolute inset-0 grid gap-0"
             style={{
@@ -250,8 +250,8 @@ export default function ResultPage() {
         {/* 説明テキスト */}
         <p className="text-center text-sm text-gray-500 mt-4">
           {isComplete
-            ? '全ての武器を支給されました！'
-            : '武器をチェックすると画像が見えてきます'}
+            ? '全てのブキを支給されました！'
+            : 'ブキをチェックすると画像が見えてきます'}
         </p>
       </main>
 
