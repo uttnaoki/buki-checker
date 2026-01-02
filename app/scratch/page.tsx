@@ -160,7 +160,7 @@ export default function ResultPage() {
       </header>
 
       {/* メインコンテンツ */}
-      <main className="max-w-md mx-auto p-4 pb-24">
+      <main className="max-w-md mx-auto p-4 pb-32">
         {/* プログレス */}
         <div className="mb-4">
           <div className="flex justify-between text-sm mb-1">

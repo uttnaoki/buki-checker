@@ -194,7 +194,7 @@ export function WeaponList() {
       </header>
 
       {/* 武器リスト */}
-      <main className="max-w-md mx-auto p-4 pb-20">
+      <main className="max-w-md mx-auto p-4 pb-28">
         <div className="grid grid-cols-3 gap-2">
           {activeWeapons.map((weapon) => (
             <WeaponItem

@@ -43,7 +43,7 @@ export default function SettingsPage() {
       </header>
 
       {/* コンテンツ */}
-      <main className="max-w-md mx-auto p-4 pb-20">
+      <main className="max-w-md mx-auto p-4 pb-28">
         <div className="space-y-6">
           {/* データ管理セクション */}
           <section>
