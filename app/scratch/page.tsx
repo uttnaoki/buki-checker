@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Share2 } from 'lucide-react';
 import { WEAPONS } from '@/data/weapons';
@@ -62,6 +62,12 @@ export default function ResultPage() {
   const progressPercentage =
     totalWeapons > 0 ? (checkedCount / totalWeapons) * 100 : 0;
   const isComplete = checkedCount === totalWeapons;
+  const opacityRate = useMemo(() => {
+    const rate = checkedCount / totalWeapons;
+    if (rate <= 0.5) return 30;
+    if (rate <= 0.75) return 20;
+    return 10;
+  }, [checkedCount, totalWeapons]);
 
   // グリッドセルを生成
   const gridCells = createGridCells(WEAPONS);
@@ -198,33 +204,28 @@ export default function ResultPage() {
             }}
           >
             {gridCells.map((cell, index) => {
-              if (cell.type === 'empty') {
-                // 空きセル（透明で背景画像が見える）
-                return (
-                  <div
-                    key={`empty-${index}`}
-                    className="relative aspect-square"
-                  />
-                );
-              }
-
-              const weapon = cell.weapon;
-              const checked = isChecked(weapon.id);
+              const isEmpty = cell.type === 'empty';
+              const weapon = isEmpty ? null : cell.weapon;
+              const checked = isEmpty || (weapon && isChecked(weapon.id));
 
               return (
                 <div
-                  key={weapon.id}
+                  key={isEmpty ? `empty-${index}` : weapon!.id}
                   className={`relative aspect-square transition-opacity duration-300 ${
-                    checked ? 'opacity-0' : 'opacity-100'
+                    checked ? `opacity-${opacityRate}` : 'opacity-100'
                   }`}
                 >
-                  <div className="absolute inset-0 bg-gray-800/90 m-[1px]">
-                    <Image
-                      src={weapon.iconUrl || '/images/weapons/placeholder.png'}
-                      alt={weapon.name}
-                      fill
-                      className="object-contain p-0.5"
-                    />
+                  <div className={`absolute inset-0 bg-gray-800/90 m-[1px]`}>
+                    {weapon && (
+                      <Image
+                        src={
+                          weapon.iconUrl || '/images/weapons/placeholder.png'
+                        }
+                        alt={weapon.name}
+                        fill
+                        className="object-contain p-0.5"
+                      />
+                    )}
                   </div>
                 </div>
               );
