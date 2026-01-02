@@ -1,46 +1,66 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { storageDataSchema } from '@/schemas/weapon.schema';
-import type { StorageData, WeaponCheckState } from '@/types/weapon.types';
-import { STORAGE_KEY } from '@/types/weapon.types';
+import { WEAPONS, WEAPON_BY_ID, TOTAL_WEAPONS } from '@/data/weapons';
+
+// ストレージキー
+const STORAGE_KEY = 'weapon-checks';
+const OLD_STORAGE_KEY = 'splatoon3-salmon-run-weapon-checks';
 
 /**
  * 武器チェック状態を管理するカスタムフック
  *
  * ローカルストレージと連携して、チェック状態を永続化します
+ * Base64URL形式で保存（約12文字）
  */
 export function useWeaponChecks() {
-  const [checks, setChecks] = useState<Record<string, WeaponCheckState>>({});
+  const [checkedIndices, setCheckedIndices] = useState<Set<number>>(new Set());
   const [isLoaded, setIsLoaded] = useState(false);
 
   // ローカルストレージからデータを読み込み
   useEffect(() => {
     try {
+      // 新形式を確認
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
-        const parsed = JSON.parse(stored);
-        const validated = storageDataSchema.parse(parsed);
-        setChecks(validated.checks);
+        const indices = decodeProgressToIndices(stored);
+        setCheckedIndices(indices);
+      } else {
+        // 旧形式からのマイグレーション
+        const oldStored = localStorage.getItem(OLD_STORAGE_KEY);
+        if (oldStored) {
+          const parsed = JSON.parse(oldStored);
+          const indices = new Set<number>();
+          if (parsed.checks) {
+            for (const [id, state] of Object.entries(parsed.checks)) {
+              if ((state as { checked?: boolean }).checked) {
+                const weapon = WEAPON_BY_ID.get(id);
+                if (weapon) {
+                  indices.add(weapon.index);
+                }
+              }
+            }
+          }
+          setCheckedIndices(indices);
+          // 新形式で保存
+          saveIndicesToStorage(indices);
+          // 旧形式を削除
+          localStorage.removeItem(OLD_STORAGE_KEY);
+        }
       }
     } catch (error) {
       console.error('Failed to load weapon checks:', error);
-      // エラー時は空の状態で開始
-      setChecks({});
+      setCheckedIndices(new Set());
     } finally {
       setIsLoaded(true);
     }
   }, []);
 
   // ローカルストレージにデータを保存
-  const saveToStorage = useCallback((newChecks: Record<string, WeaponCheckState>) => {
+  const saveIndicesToStorage = useCallback((indices: Set<number>) => {
     try {
-      const data: StorageData = {
-        version: '1.0',
-        checks: newChecks,
-        lastUpdated: new Date().toISOString(),
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      const encoded = encodeIndicesToProgress(indices);
+      localStorage.setItem(STORAGE_KEY, encoded);
     } catch (error) {
       console.error('Failed to save weapon checks:', error);
     }
@@ -49,97 +69,104 @@ export function useWeaponChecks() {
   // 武器のチェック状態を切り替え
   const toggleCheck = useCallback(
     (weaponId: string) => {
-      setChecks((prev) => {
-        const currentCheck = prev[weaponId];
-        const newCheck: WeaponCheckState = {
-          weaponId,
-          checked: !currentCheck?.checked,
-          checkedAt: !currentCheck?.checked ? new Date().toISOString() : undefined,
-        };
+      const weapon = WEAPON_BY_ID.get(weaponId);
+      if (!weapon) return;
 
-        const newChecks = {
-          ...prev,
-          [weaponId]: newCheck,
-        };
-
-        saveToStorage(newChecks);
-        return newChecks;
+      setCheckedIndices((prev) => {
+        const newIndices = new Set(prev);
+        if (newIndices.has(weapon.index)) {
+          newIndices.delete(weapon.index);
+        } else {
+          newIndices.add(weapon.index);
+        }
+        saveIndicesToStorage(newIndices);
+        return newIndices;
       });
     },
-    [saveToStorage]
+    [saveIndicesToStorage]
   );
 
   // 全てチェック
   const checkAll = useCallback(
     (weaponIds: string[]) => {
-      setChecks((prev) => {
-        const newChecks = { ...prev };
-        const now = new Date().toISOString();
-
-        weaponIds.forEach((weaponId) => {
-          newChecks[weaponId] = {
-            weaponId,
-            checked: true,
-            checkedAt: now,
-          };
+      setCheckedIndices((prev) => {
+        const newIndices = new Set(prev);
+        weaponIds.forEach((id) => {
+          const weapon = WEAPON_BY_ID.get(id);
+          if (weapon) {
+            newIndices.add(weapon.index);
+          }
         });
-
-        saveToStorage(newChecks);
-        return newChecks;
+        saveIndicesToStorage(newIndices);
+        return newIndices;
       });
     },
-    [saveToStorage]
+    [saveIndicesToStorage]
   );
 
   // 全て未チェック
   const uncheckAll = useCallback(
     (weaponIds: string[]) => {
-      setChecks((prev) => {
-        const newChecks = { ...prev };
-
-        weaponIds.forEach((weaponId) => {
-          newChecks[weaponId] = {
-            weaponId,
-            checked: false,
-            checkedAt: undefined,
-          };
+      setCheckedIndices((prev) => {
+        const newIndices = new Set(prev);
+        weaponIds.forEach((id) => {
+          const weapon = WEAPON_BY_ID.get(id);
+          if (weapon) {
+            newIndices.delete(weapon.index);
+          }
         });
-
-        saveToStorage(newChecks);
-        return newChecks;
+        saveIndicesToStorage(newIndices);
+        return newIndices;
       });
     },
-    [saveToStorage]
+    [saveIndicesToStorage]
   );
 
   // 特定の武器がチェックされているか
   const isChecked = useCallback(
     (weaponId: string): boolean => {
-      return checks[weaponId]?.checked ?? false;
+      const weapon = WEAPON_BY_ID.get(weaponId);
+      if (!weapon) return false;
+      return checkedIndices.has(weapon.index);
     },
-    [checks]
+    [checkedIndices]
   );
 
   // チェック済み武器数を取得
   const getCheckedCount = useCallback(
     (weaponIds?: string[]): number => {
       if (weaponIds) {
-        return weaponIds.filter((id) => checks[id]?.checked).length;
+        return weaponIds.filter((id) => {
+          const weapon = WEAPON_BY_ID.get(id);
+          return weapon && checkedIndices.has(weapon.index);
+        }).length;
       }
-      return Object.values(checks).filter((check) => check.checked).length;
+      return checkedIndices.size;
     },
-    [checks]
+    [checkedIndices]
   );
 
   // 全てのデータを完全に削除
   const clearAll = useCallback(() => {
-    setChecks({});
+    setCheckedIndices(new Set());
     try {
       localStorage.removeItem(STORAGE_KEY);
     } catch (error) {
       console.error('Failed to clear weapon checks:', error);
     }
   }, []);
+
+  // checksオブジェクトを生成（後方互換性のため）
+  const checks = Object.fromEntries(
+    WEAPONS.map((weapon) => [
+      weapon.id,
+      {
+        weaponId: weapon.id,
+        checked: checkedIndices.has(weapon.index),
+        checkedAt: undefined,
+      },
+    ])
+  );
 
   return {
     checks,
@@ -151,4 +178,69 @@ export function useWeaponChecks() {
     isChecked,
     getCheckedCount,
   };
+}
+
+// Base64URL文字セット
+const BASE64URL_CHARS =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+// Set<number>をBase64URLにエンコード
+function encodeIndicesToProgress(indices: Set<number>): string {
+  let binary = '';
+  for (let i = 0; i < TOTAL_WEAPONS; i++) {
+    binary += indices.has(i) ? '1' : '0';
+  }
+
+  const bigInt = BigInt('0b' + binary);
+
+  if (bigInt === BigInt(0)) {
+    return 'A';
+  }
+
+  let result = '';
+  let remaining = bigInt;
+  const base = BigInt(64);
+
+  while (remaining > BigInt(0)) {
+    const index = Number(remaining % base);
+    result = BASE64URL_CHARS[index] + result;
+    remaining = remaining / base;
+  }
+
+  return result;
+}
+
+// Base64URLをSet<number>にデコード
+function decodeProgressToIndices(encoded: string): Set<number> {
+  const indices = new Set<number>();
+
+  if (!encoded) {
+    return indices;
+  }
+
+  let bigInt = BigInt(0);
+  const base = BigInt(64);
+
+  for (const char of encoded) {
+    const index = BASE64URL_CHARS.indexOf(char);
+    if (index === -1) {
+      return new Set();
+    }
+    bigInt = bigInt * base + BigInt(index);
+  }
+
+  let binary = bigInt.toString(2);
+  binary = binary.padStart(TOTAL_WEAPONS, '0');
+
+  if (binary.length > TOTAL_WEAPONS) {
+    binary = binary.slice(-TOTAL_WEAPONS);
+  }
+
+  for (let i = 0; i < TOTAL_WEAPONS; i++) {
+    if (binary[i] === '1') {
+      indices.add(i);
+    }
+  }
+
+  return indices;
 }

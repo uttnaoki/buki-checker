@@ -1,5 +1,21 @@
 import type { Weapon } from '@/types/weapon.types';
 
+/**
+ * ========================================
+ * 重要: 武器のindexは絶対に変更しないこと
+ * ========================================
+ *
+ * 各武器のindexはlocalStorageとシェアURLのエンコードに使用されています。
+ * indexを変更すると、ユーザーの保存データが壊れます。
+ *
+ * 新しい武器を追加する場合:
+ * - 既存の武器のindexは変更しない
+ * - 新しい武器には次の連番(71, 72, ...)を割り当てる
+ *
+ * 武器を削除する場合:
+ * - そのindexは欠番として残す（再利用しない）
+ */
+
 import { SHOOTERS } from './shooters';
 import { ROLLERS } from './rollers';
 import { CHARGERS } from './chargers';
@@ -75,3 +91,23 @@ export function getWeaponsByCategory() {
 
 // 武器の総数
 export const TOTAL_WEAPONS = WEAPONS.length;
+
+// index → 武器 のマッピング
+export const WEAPON_BY_INDEX = new Map<number, Weapon>(
+  WEAPONS.map((weapon) => [weapon.index, weapon])
+);
+
+// id → 武器 のマッピング
+export const WEAPON_BY_ID = new Map<string, Weapon>(
+  WEAPONS.map((weapon) => [weapon.id, weapon])
+);
+
+// index → id
+export function getWeaponIdByIndex(index: number): string | undefined {
+  return WEAPON_BY_INDEX.get(index)?.id;
+}
+
+// id → index
+export function getWeaponIndexById(id: string): number | undefined {
+  return WEAPON_BY_ID.get(id)?.index;
+}

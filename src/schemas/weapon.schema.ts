@@ -22,6 +22,8 @@ export const weaponCategorySchema = z.enum([
 
 // 武器データ
 export const weaponSchema = z.object({
+  // 重要: indexは一度割り当てたら変更禁止（localStorage/シェアURLで使用）
+  index: z.number().int().min(0),
   id: z.string().min(1, '武器IDは必須です'),
   name: z.string().min(1, '武器名は必須です'),
   category: weaponCategorySchema,
