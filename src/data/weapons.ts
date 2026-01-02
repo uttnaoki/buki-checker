@@ -1,36 +1,25 @@
 import type { Weapon } from '@/types/weapon.types';
 
 /**
- * スプラトゥーン3 武器マスターデータ
+ * スプラトゥーン3 サーモンラン 武器マスターデータ
  *
- * Note: 現在は各カテゴリの代表的な武器のみ登録
- * TODO: 全武器を追加する
- *
- * 武器画像の追加方法:
- * 1. public/images/weapons/ ディレクトリに画像ファイルを配置
- * 2. 各武器オブジェクトに iconUrl: '/images/weapons/[武器ID].png' を追加
- *    例: iconUrl: '/images/weapons/wakaba-shooter.png'
+ * 順番はゲーム内部ID順に基づく
+ * 参考: https://splatoonwiki.org/wiki/List_of_main_weapons_in_Splatoon_3
  */
 
 export const WEAPONS: Weapon[] = [
-  // シューター
+  // シューター (ID: 0-90)
+  {
+    id: 'bold-marker',
+    name: 'ボールドマーカー',
+    category: 'shooter',
+    iconUrl: '/images/weapons/bold-marker.png',
+  },
   {
     id: 'wakaba-shooter',
     name: 'わかばシューター',
     category: 'shooter',
     iconUrl: '/images/weapons/wakaba-shooter.png',
-  },
-  {
-    id: 'splattershot',
-    name: 'スプラシューター',
-    category: 'shooter',
-    iconUrl: '/images/weapons/splattershot.png',
-  },
-  {
-    id: 'promodeler-mg',
-    name: 'プロモデラーMG',
-    category: 'shooter',
-    iconUrl: '/images/weapons/promodeler-mg.png',
   },
   {
     id: 'sharp-marker',
@@ -39,16 +28,16 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/sharp-marker.png',
   },
   {
-    id: 'bold-marker',
-    name: 'ボールドマーカー',
+    id: 'promodeler-mg',
+    name: 'プロモデラーMG',
     category: 'shooter',
-    iconUrl: '/images/weapons/bold-marker.png',
+    iconUrl: '/images/weapons/promodeler-mg.png',
   },
   {
-    id: 'n-zap85',
-    name: 'N-ZAP85',
+    id: 'splattershot',
+    name: 'スプラシューター',
     category: 'shooter',
-    iconUrl: '/images/weapons/n-zap85.png',
+    iconUrl: '/images/weapons/splattershot.png',
   },
   {
     id: '52gal',
@@ -57,10 +46,10 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/52gal.png',
   },
   {
-    id: '96gal',
-    name: '.96ガロン',
+    id: 'n-zap85',
+    name: 'N-ZAP85',
     category: 'shooter',
-    iconUrl: '/images/weapons/96gal.png',
+    iconUrl: '/images/weapons/n-zap85.png',
   },
   {
     id: 'prime-shooter',
@@ -69,17 +58,25 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/prime-shooter.png',
   },
   {
+    id: '96gal',
+    name: '.96ガロン',
+    category: 'shooter',
+    iconUrl: '/images/weapons/96gal.png',
+  },
+  {
     id: 'jet-sweeper',
-    name: 'ジェットスウィーパー',
+    name: 'ジェットスイーパー',
     category: 'shooter',
     iconUrl: '/images/weapons/jet-sweeper.png',
   },
+  // スペースシューター (ID: 100)
   {
     id: 'space-shooter',
     name: 'スペースシューター',
     category: 'shooter',
     iconUrl: '/images/weapons/space-shooter.png',
   },
+  // リールガン (ID: 300-310)
   {
     id: 'l3-reelgun',
     name: 'L3リールガン',
@@ -92,13 +89,21 @@ export const WEAPONS: Weapon[] = [
     category: 'shooter',
     iconUrl: '/images/weapons/h3-reelgun.png',
   },
+  // スクイーザー (ID: 400)
   {
     id: 'bottlegeyser',
     name: 'ボトルガイザー',
     category: 'shooter',
     iconUrl: '/images/weapons/bottlegeyser.png',
   },
-  // ブラスター
+
+  // ブラスター (ID: 200-260)
+  {
+    id: 'nova-blaster',
+    name: 'ノヴァブラスター',
+    category: 'blaster',
+    iconUrl: '/images/weapons/nova-blaster.png',
+  },
   {
     id: 'hot-blaster',
     name: 'ホットブラスター',
@@ -106,10 +111,10 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/hot-blaster.png',
   },
   {
-    id: 'nova-blaster',
-    name: 'ノヴァブラスター',
+    id: 'long-blaster',
+    name: 'ロングブラスター',
     category: 'blaster',
-    iconUrl: '/images/weapons/nova-blaster.png',
+    iconUrl: '/images/weapons/long-blaster.png',
   },
   {
     id: 'clash-blaster',
@@ -125,15 +130,9 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: 'rapid-blaster-elite',
-    name: 'ラピッドブラスターエリート',
+    name: 'Rブラスターエリート',
     category: 'blaster',
     iconUrl: '/images/weapons/rapid-blaster-elite.png',
-  },
-  {
-    id: 'long-blaster',
-    name: 'ロングブラスター',
-    category: 'blaster',
-    iconUrl: '/images/weapons/long-blaster.png',
   },
   {
     id: 's-blast92',
@@ -142,18 +141,18 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/s-blast92.png',
   },
 
-  // ローラー
-  {
-    id: 'splat-roller',
-    name: 'スプラローラー',
-    category: 'roller',
-    iconUrl: '/images/weapons/splat-roller.png',
-  },
+  // ローラー (ID: 1000-1040)
   {
     id: 'carbon-roller',
     name: 'カーボンローラー',
     category: 'roller',
     iconUrl: '/images/weapons/carbon-roller.png',
+  },
+  {
+    id: 'splat-roller',
+    name: 'スプラローラー',
+    category: 'roller',
+    iconUrl: '/images/weapons/splat-roller.png',
   },
   {
     id: 'dynamo-roller',
@@ -162,19 +161,19 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/dynamo-roller.png',
   },
   {
-    id: 'wide-roller',
-    name: 'ワイドローラー',
-    category: 'roller',
-    iconUrl: '/images/weapons/wide-roller.png',
-  },
-  {
     id: 'variable-roller',
     name: 'ヴァリアブルローラー',
     category: 'roller',
     iconUrl: '/images/weapons/variable-roller.png',
   },
+  {
+    id: 'wide-roller',
+    name: 'ワイドローラー',
+    category: 'roller',
+    iconUrl: '/images/weapons/wide-roller.png',
+  },
 
-  // フデ
+  // フデ (ID: 1100-1120)
   {
     id: 'pablo',
     name: 'パブロ',
@@ -194,7 +193,7 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/fincent.png',
   },
 
-  // チャージャー
+  // チャージャー (ID: 2000-2060, スコープ除く)
   {
     id: 'squiffer',
     name: 'スクイックリン',
@@ -214,16 +213,16 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/eliter-4k.png',
   },
   {
-    id: 'soychooter',
-    name: 'ソイチューバー',
-    category: 'charger',
-    iconUrl: '/images/weapons/soychooter.png',
-  },
-  {
     id: '14shiki-taketsutsutou',
     name: '14式竹筒銃',
     category: 'charger',
     iconUrl: '/images/weapons/14shiki-taketsutsutou.png',
+  },
+  {
+    id: 'soychooter',
+    name: 'ソイチューバー',
+    category: 'charger',
+    iconUrl: '/images/weapons/soychooter.png',
   },
   {
     id: 'r-pen-5h',
@@ -232,7 +231,7 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/r-pen-5h.png',
   },
 
-  // スロッシャー
+  // スロッシャー (ID: 3000-3050)
   {
     id: 'bucketslosher',
     name: 'バケットスロッシャー',
@@ -270,18 +269,18 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/dread-wringer.png',
   },
 
-  // スピナー
-  {
-    id: 'barrel-spinner',
-    name: 'バレルスピナー',
-    category: 'spinner',
-    iconUrl: '/images/weapons/barrel-spinner.png',
-  },
+  // スピナー (ID: 4000-4050)
   {
     id: 'splatspinner',
     name: 'スプラスピナー',
     category: 'spinner',
     iconUrl: '/images/weapons/splatspinner.png',
+  },
+  {
+    id: 'barrel-spinner',
+    name: 'バレルスピナー',
+    category: 'spinner',
+    iconUrl: '/images/weapons/barrel-spinner.png',
   },
   {
     id: 'hydra-splatling',
@@ -297,7 +296,7 @@ export const WEAPONS: Weapon[] = [
   },
   {
     id: 'nautilus',
-    name: 'ノーチラス',
+    name: 'ノーチラス47',
     category: 'spinner',
     iconUrl: '/images/weapons/nautilus.png',
   },
@@ -308,18 +307,18 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/heavy-edit-splatling.png',
   },
 
-  // マニューバー
+  // マニューバー (ID: 5000-5050)
+  {
+    id: 'splattery',
+    name: 'スパッタリー',
+    category: 'maneuver',
+    iconUrl: '/images/weapons/splattery.png',
+  },
   {
     id: 'splat-maneuver',
     name: 'スプラマニューバー',
     category: 'maneuver',
     iconUrl: '/images/weapons/splat-maneuver.png',
-  },
-  {
-    id: 'dual-sweeper',
-    name: 'デュアルスイーパー',
-    category: 'maneuver',
-    iconUrl: '/images/weapons/dual-sweeper.png',
   },
   {
     id: 'kelvin525',
@@ -328,16 +327,16 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/kelvin525.png',
   },
   {
-    id: 'quad-hopper',
-    name: 'クアッドホッパー',
+    id: 'dual-sweeper',
+    name: 'デュアルスイーパー',
     category: 'maneuver',
-    iconUrl: '/images/weapons/quad-hopper.png',
+    iconUrl: '/images/weapons/dual-sweeper.png',
   },
   {
-    id: 'splattery',
-    name: 'スパッタリー',
+    id: 'quad-hopper',
+    name: 'クアッドホッパーブラック',
     category: 'maneuver',
-    iconUrl: '/images/weapons/splattery.png',
+    iconUrl: '/images/weapons/quad-hopper.png',
   },
   {
     id: 'guen-ff',
@@ -346,7 +345,7 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/guen-ff.png',
   },
 
-  // シェルター
+  // シェルター (ID: 6000-6030)
   {
     id: 'parashelter',
     name: 'パラシェルター',
@@ -360,10 +359,10 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/campingshelter.png',
   },
   {
-    id: '24shiki-harikae-gasa',
+    id: 'spy-gadget',
     name: 'スパイガジェット',
     category: 'shelter',
-    iconUrl: '/images/weapons/24shiki-harikae-gasa.png',
+    iconUrl: '/images/weapons/spy-gadget.png',
   },
   {
     id: 'recycled-brella-24',
@@ -372,7 +371,7 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/recycled-brella-24.png',
   },
 
-  // ストリンガー
+  // ストリンガー (ID: 7010-7030)
   {
     id: 'tristringer',
     name: 'トライストリンガー',
@@ -392,7 +391,7 @@ export const WEAPONS: Weapon[] = [
     iconUrl: '/images/weapons/wellstring-v.png',
   },
 
-  // ワイパー
+  // ワイパー (ID: 8000-8020)
   {
     id: 'drivewiper',
     name: 'ドライブワイパー',
@@ -465,13 +464,16 @@ export const WEAPONS: Weapon[] = [
 
 // カテゴリごとに武器を取得
 export function getWeaponsByCategory() {
-  const grouped = WEAPONS.reduce((acc, weapon) => {
-    if (!acc[weapon.category]) {
-      acc[weapon.category] = [];
-    }
-    acc[weapon.category].push(weapon);
-    return acc;
-  }, {} as Record<string, Weapon[]>);
+  const grouped = WEAPONS.reduce(
+    (acc, weapon) => {
+      if (!acc[weapon.category]) {
+        acc[weapon.category] = [];
+      }
+      acc[weapon.category].push(weapon);
+      return acc;
+    },
+    {} as Record<string, Weapon[]>
+  );
 
   return grouped;
 }
