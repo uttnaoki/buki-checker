@@ -6,7 +6,7 @@ import { BottomNav } from './BottomNav';
 import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
 import { CATEGORY_LABELS } from '@/types/weapon.types';
 import { getWeaponsByCategory } from '@/data/weapons';
-import { useWeaponChecks } from '@/hooks/useWeaponChecks';
+import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
 import { WeaponItem } from './WeaponItem';
 
 // カテゴリアイコンのマッピング
@@ -26,7 +26,7 @@ const CATEGORY_ICON_PATHS: Record<WeaponCategoryType, string> = {
 };
 
 export function WeaponList() {
-  const { isLoaded, toggleCheck, isChecked, getCheckedCount } = useWeaponChecks();
+  const { toggleCheck, isChecked, getCheckedCount, hasHydrated } = useWeaponCheckStore();
   const weaponsByCategory = useMemo(() => getWeaponsByCategory(), []);
 
   // 全武器リスト
@@ -90,7 +90,7 @@ export function WeaponList() {
     [activeCategory, allWeapons, weaponsByCategory]
   );
 
-  if (!isLoaded) {
+  if (!hasHydrated) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-gray-600">読み込み中...</div>

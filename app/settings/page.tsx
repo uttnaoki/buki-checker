@@ -1,13 +1,13 @@
 'use client';
 
-import { useWeaponChecks } from '@/hooks/useWeaponChecks';
+import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
 import { BottomNav } from '@/components/BottomNav';
 import { WEAPONS } from '@/data/weapons';
 import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { clearAll, checkAll, getCheckedCount } = useWeaponChecks();
+  const { clearAll, checkAll, getCheckedCount } = useWeaponCheckStore();
 
   const totalChecked = getCheckedCount();
   const totalWeapons = WEAPONS.length;

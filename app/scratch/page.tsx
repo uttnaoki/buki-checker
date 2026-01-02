@@ -4,9 +4,8 @@ import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Share2 } from 'lucide-react';
 import { WEAPONS } from '@/data/weapons';
-import { useWeaponChecks } from '@/hooks/useWeaponChecks';
+import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
 import { BottomNav } from '@/components/BottomNav';
-import { generateShareUrl } from '@/utils/progressEncoder';
 
 // グリッドの列数
 const GRID_COLS = 9;
@@ -53,7 +52,7 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 }
 
 export default function ResultPage() {
-  const { isLoaded, isChecked, getCheckedCount, checks } = useWeaponChecks();
+  const { hasHydrated, isChecked, getCheckedCount, getEncodedProgress } = useWeaponCheckStore();
   const [showCompleteAnimation, setShowCompleteAnimation] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
 
@@ -72,21 +71,11 @@ export default function ResultPage() {
   // グリッドセルを生成
   const gridCells = createGridCells(WEAPONS);
 
-  // チェック済み武器IDのSetを取得
-  const getCheckedIds = (): Set<string> => {
-    const ids = new Set<string>();
-    for (const [id, state] of Object.entries(checks)) {
-      if (state.checked) {
-        ids.add(id);
-      }
-    }
-    return ids;
-  };
-
   // 共有ボタンのクリックハンドラ
   const handleShare = async () => {
-    const checkedIds = getCheckedIds();
-    const shareUrl = generateShareUrl(checkedIds);
+    const encoded = getEncodedProgress();
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+    const shareUrl = `${baseUrl}/share?p=${encoded}`;
 
     // Web Share APIが利用可能な場合
     if (navigator.share) {
@@ -112,7 +101,7 @@ export default function ResultPage() {
 
   // コンプリート時のアニメーション表示
   useEffect(() => {
-    if (isLoaded && isComplete) {
+    if (hasHydrated && isComplete) {
       // setStateを非同期で呼び出してカスケードレンダーを回避
       const showTimer = setTimeout(() => {
         setShowCompleteAnimation(true);
@@ -125,9 +114,9 @@ export default function ResultPage() {
         clearTimeout(hideTimer);
       };
     }
-  }, [isLoaded, isComplete]);
+  }, [hasHydrated, isComplete]);
 
-  if (!isLoaded) {
+  if (!hasHydrated) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-gray-600">読み込み中...</div>

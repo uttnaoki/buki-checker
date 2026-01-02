@@ -67,20 +67,23 @@ function decodeIndices(encoded: string): Set<number> {
   return indices;
 }
 
-interface WeaponCheckState {
+interface WeaponCheckStore {
   checkedIndices: Set<number>;
+  hasHydrated: boolean;
   toggleCheck: (weaponId: string) => void;
   checkAll: (weaponIds: string[]) => void;
   uncheckAll: (weaponIds: string[]) => void;
   clearAll: () => void;
   isChecked: (weaponId: string) => boolean;
   getCheckedCount: (weaponIds?: string[]) => number;
+  getEncodedProgress: () => string;
 }
 
-export const useWeaponCheckStore = create<WeaponCheckState>()(
+export const useWeaponCheckStore = create<WeaponCheckStore>()(
   persist(
     (set, get) => ({
       checkedIndices: new Set<number>(),
+      hasHydrated: false,
 
       toggleCheck: (weaponId: string) => {
         const weapon = WEAPON_BY_ID.get(weaponId);
@@ -124,7 +127,7 @@ export const useWeaponCheckStore = create<WeaponCheckState>()(
       },
 
       clearAll: () => {
-        set({ checkedIndices: new Set() });
+        set({ checkedIndices: new Set<number>() });
       },
 
       isChecked: (weaponId: string) => {
@@ -143,9 +146,16 @@ export const useWeaponCheckStore = create<WeaponCheckState>()(
         }
         return checkedIndices.size;
       },
+
+      getEncodedProgress: () => {
+        return encodeIndices(get().checkedIndices);
+      },
     }),
     {
       name: 'weapon-checks',
+      onRehydrateStorage: () => () => {
+        useWeaponCheckStore.setState({ hasHydrated: true });
+      },
       storage: {
         getItem: (name) => {
           const str = localStorage.getItem(name);
