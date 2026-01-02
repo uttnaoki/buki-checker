@@ -21,11 +21,17 @@ export default function ResultPage() {
   // コンプリート時のアニメーション表示
   useEffect(() => {
     if (isLoaded && isComplete) {
-      setShowCompleteAnimation(true);
-      const timer = setTimeout(() => {
+      // setStateを非同期で呼び出してカスケードレンダーを回避
+      const showTimer = setTimeout(() => {
+        setShowCompleteAnimation(true);
+      }, 0);
+      const hideTimer = setTimeout(() => {
         setShowCompleteAnimation(false);
       }, 2000);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
     }
   }, [isLoaded, isComplete]);
 
