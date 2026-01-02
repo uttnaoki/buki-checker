@@ -2,15 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { Share2 } from 'lucide-react';
 import { WEAPONS } from '@/data/weapons';
 import { useWeaponChecks } from '@/hooks/useWeaponChecks';
 import { BottomNav } from '@/components/BottomNav';
+import { generateShareUrl } from '@/utils/progressEncoder';
 
 // グリッドの列数
 const GRID_COLS = 9;
 
 // グリッドセルの種類
-type GridCell = { type: 'weapon'; weapon: (typeof WEAPONS)[number] } | { type: 'empty' };
+type GridCell =
+  | { type: 'weapon'; weapon: (typeof WEAPONS)[number] }
+  | { type: 'empty' };
 
 // 武器を正方形グリッドに配置し、空きセルを中央に配置する
 function createGridCells(weapons: typeof WEAPONS): GridCell[] {
@@ -49,16 +53,56 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 }
 
 export default function ResultPage() {
-  const { isLoaded, isChecked, getCheckedCount } = useWeaponChecks();
+  const { isLoaded, isChecked, getCheckedCount, checks } = useWeaponChecks();
   const [showCompleteAnimation, setShowCompleteAnimation] = useState(false);
+  const [showCopied, setShowCopied] = useState(false);
 
   const totalWeapons = WEAPONS.length;
   const checkedCount = getCheckedCount();
-  const progressPercentage = totalWeapons > 0 ? (checkedCount / totalWeapons) * 100 : 0;
+  const progressPercentage =
+    totalWeapons > 0 ? (checkedCount / totalWeapons) * 100 : 0;
   const isComplete = checkedCount === totalWeapons;
 
   // グリッドセルを生成
   const gridCells = createGridCells(WEAPONS);
+
+  // チェック済み武器IDのSetを取得
+  const getCheckedIds = (): Set<string> => {
+    const ids = new Set<string>();
+    for (const [id, state] of Object.entries(checks)) {
+      if (state.checked) {
+        ids.add(id);
+      }
+    }
+    return ids;
+  };
+
+  // 共有ボタンのクリックハンドラ
+  const handleShare = async () => {
+    const checkedIds = getCheckedIds();
+    const shareUrl = generateShareUrl(checkedIds);
+
+    // Web Share APIが利用可能な場合
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'ブキチェッカー - スクラッチ進捗',
+          text: `${checkedCount}/${totalWeapons}種類の武器をチェックしました！`,
+          url: shareUrl,
+        });
+        return;
+      } catch {
+        // ユーザーがキャンセルした場合など
+      }
+    }
+
+    // フォールバック: クリップボードにコピー
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShowCopied(true);
+      setTimeout(() => setShowCopied(false), 2000);
+    } catch {}
+  };
 
   // コンプリート時のアニメーション表示
   useEffect(() => {
@@ -89,13 +133,27 @@ export default function ResultPage() {
     <div className="min-h-screen bg-gray-50">
       {/* ヘッダー */}
       <header className="sticky top-0 z-10 bg-white shadow-sm">
-        <div className="max-w-md mx-auto p-4">
-          <h1 className="text-xl font-bold text-gray-900">スクラッチ</h1>
-          <p className="text-sm text-gray-600 mt-1">
-            {isComplete
-              ? 'コンプリート！'
-              : `あと ${totalWeapons - checkedCount} 種類`}
-          </p>
+        <div className="max-w-md mx-auto p-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">スクラッチ</h1>
+            <p className="text-sm text-gray-600 mt-1">
+              {isComplete
+                ? 'コンプリート！'
+                : `あと ${totalWeapons - checkedCount} 種類`}
+            </p>
+          </div>
+          <button
+            onClick={handleShare}
+            className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="進捗を共有"
+          >
+            <Share2 className="w-5 h-5" />
+            {showCopied && (
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs bg-gray-800 text-white px-2 py-1 rounded whitespace-nowrap">
+                URLをコピーしました
+              </span>
+            )}
+          </button>
         </div>
       </header>
 
@@ -142,7 +200,12 @@ export default function ResultPage() {
             {gridCells.map((cell, index) => {
               if (cell.type === 'empty') {
                 // 空きセル（透明で背景画像が見える）
-                return <div key={`empty-${index}`} className="relative aspect-square" />;
+                return (
+                  <div
+                    key={`empty-${index}`}
+                    className="relative aspect-square"
+                  />
+                );
               }
 
               const weapon = cell.weapon;
