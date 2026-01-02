@@ -21,7 +21,7 @@ export function BottomNav() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-inset-bottom">
-      <nav className="max-w-md mx-auto px-4 py-2 flex justify-around">
+      <nav className="max-w-md mx-auto px-4 py-2 flex">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href;
           const Icon = item.icon;
@@ -30,7 +30,7 @@ export function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center gap-1 px-4 py-1 rounded-lg transition-colors ${
+              className={`flex-1 flex flex-col items-center gap-1 py-1 rounded-lg transition-colors ${
                 isActive
                   ? 'text-green-600'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
