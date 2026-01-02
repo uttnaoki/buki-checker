@@ -1,6 +1,7 @@
 'use client';
 
 import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
+import { useSettingsStore, MAX_NAME_LENGTH } from '@/stores/settingsStore';
 import { BottomNav } from '@/components/BottomNav';
 import { WEAPONS } from '@/data/weapons';
 import { useRouter } from 'next/navigation';
@@ -8,6 +9,7 @@ import { useRouter } from 'next/navigation';
 export default function SettingsPage() {
   const router = useRouter();
   const { clearAll, checkAll, checkedIndices } = useWeaponCheckStore();
+  const { name, setName } = useSettingsStore();
 
   const totalChecked = checkedIndices.size;
   const totalWeapons = WEAPONS.length;
@@ -45,6 +47,27 @@ export default function SettingsPage() {
       {/* コンテンツ */}
       <main className="max-w-md mx-auto p-4 pb-28">
         <div className="space-y-6">
+          {/* 名前設定セクション */}
+          <section>
+            <h2 className="text-sm font-medium text-gray-700 mb-3">プロフィール</h2>
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden p-4">
+              <label className="block">
+                <span className="text-sm text-gray-600">名前</span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={MAX_NAME_LENGTH}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  placeholder="ハチ"
+                />
+                <span className="text-xs text-gray-400 mt-1 block text-right">
+                  {name.length}/{MAX_NAME_LENGTH}文字
+                </span>
+              </label>
+            </div>
+          </section>
+
           {/* データ管理セクション */}
           <section>
             <h2 className="text-sm font-medium text-gray-700 mb-3">データ管理</h2>

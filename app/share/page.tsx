@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { WEAPONS } from '@/data/weapons';
 import { decodeProgress } from '@/utils/progressEncoder';
+import { DEFAULT_NAME } from '@/stores/settingsStore';
 
 // グリッドの列数
 const GRID_COLS = 9;
@@ -48,6 +49,7 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 function ShareContent() {
   const searchParams = useSearchParams();
   const progressParam = searchParams.get('p') || '';
+  const nameParam = searchParams.get('name') || DEFAULT_NAME;
   const checkedIds = decodeProgress(progressParam);
 
   const totalWeapons = WEAPONS.length;
@@ -74,7 +76,7 @@ function ShareContent() {
             </Link>
             <div>
               <h1 className="text-xl font-bold text-gray-900">
-                共有スクラッチ
+                {nameParam}のスクラッチ
               </h1>
               <p className="text-sm text-gray-600">
                 {isComplete

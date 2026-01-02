@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Share2 } from 'lucide-react';
 import { WEAPONS, WEAPON_BY_ID } from '@/data/weapons';
 import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
+import { useSettingsStore, DEFAULT_NAME } from '@/stores/settingsStore';
 import { BottomNav } from '@/components/BottomNav';
 
 // グリッドの列数
@@ -54,6 +55,8 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 export default function ResultPage() {
   const { hasHydrated, checkedIndices, getEncodedProgress } =
     useWeaponCheckStore();
+  const { name: rawName } = useSettingsStore();
+  const name = rawName || DEFAULT_NAME;
   const [showCompleteAnimation, setShowCompleteAnimation] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
 
@@ -82,13 +85,13 @@ export default function ResultPage() {
   const handleShare = async () => {
     const encoded = getEncodedProgress();
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    const shareUrl = `${baseUrl}/share?p=${encoded}`;
+    const shareUrl = `${baseUrl}/share?p=${encoded}&name=${encodeURIComponent(name)}`;
 
     // Web Share APIが利用可能な場合
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'ブキチェッカー - スクラッチ進捗',
+          title: `${name}のスクラッチ`,
           text: `${checkedCount}/${totalWeapons}種類のブキをチェックしました！`,
           url: shareUrl,
         });
@@ -137,7 +140,7 @@ export default function ResultPage() {
       <header className="sticky top-0 z-10 bg-white shadow-sm">
         <div className="max-w-md mx-auto p-4 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">スクラッチ</h1>
+            <h1 className="text-xl font-bold text-gray-900">{name}のスクラッチ</h1>
             <p className="text-sm text-gray-600 mt-1">
               {isComplete
                 ? 'コンプリート！'
