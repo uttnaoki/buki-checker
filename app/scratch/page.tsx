@@ -9,6 +9,45 @@ import { BottomNav } from '@/components/BottomNav';
 // グリッドの列数
 const GRID_COLS = 9;
 
+// グリッドセルの種類
+type GridCell = { type: 'weapon'; weapon: (typeof WEAPONS)[number] } | { type: 'empty' };
+
+// 武器を正方形グリッドに配置し、空きセルを中央に配置する
+function createGridCells(weapons: typeof WEAPONS): GridCell[] {
+  const totalWeapons = weapons.length;
+  // 正方形グリッドに必要な行数（列数と同じ）
+  const gridRows = GRID_COLS;
+  const totalCells = GRID_COLS * gridRows;
+  const emptyCells = totalCells - totalWeapons;
+
+  if (emptyCells <= 0) {
+    // 空きセルがない場合はそのまま武器を返す
+    return weapons.map((weapon) => ({ type: 'weapon', weapon }));
+  }
+
+  // 空きセルを中央に配置
+  const weaponsBefore = Math.floor(totalWeapons / 2);
+
+  const cells: GridCell[] = [];
+
+  // 前半の武器
+  for (let i = 0; i < weaponsBefore; i++) {
+    cells.push({ type: 'weapon', weapon: weapons[i] });
+  }
+
+  // 中央の空きセル
+  for (let i = 0; i < emptyCells; i++) {
+    cells.push({ type: 'empty' });
+  }
+
+  // 後半の武器
+  for (let i = weaponsBefore; i < totalWeapons; i++) {
+    cells.push({ type: 'weapon', weapon: weapons[i] });
+  }
+
+  return cells;
+}
+
 export default function ResultPage() {
   const { isLoaded, isChecked, getCheckedCount } = useWeaponChecks();
   const [showCompleteAnimation, setShowCompleteAnimation] = useState(false);
@@ -17,6 +56,9 @@ export default function ResultPage() {
   const checkedCount = getCheckedCount();
   const progressPercentage = totalWeapons > 0 ? (checkedCount / totalWeapons) * 100 : 0;
   const isComplete = checkedCount === totalWeapons;
+
+  // グリッドセルを生成
+  const gridCells = createGridCells(WEAPONS);
 
   // コンプリート時のアニメーション表示
   useEffect(() => {
@@ -94,9 +136,16 @@ export default function ResultPage() {
             className="absolute inset-0 grid gap-0"
             style={{
               gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)`,
+              gridTemplateRows: `repeat(${GRID_COLS}, 1fr)`,
             }}
           >
-            {WEAPONS.map((weapon) => {
+            {gridCells.map((cell, index) => {
+              if (cell.type === 'empty') {
+                // 空きセル（透明で背景画像が見える）
+                return <div key={`empty-${index}`} className="relative aspect-square" />;
+              }
+
+              const weapon = cell.weapon;
               const checked = isChecked(weapon.id);
 
               return (
