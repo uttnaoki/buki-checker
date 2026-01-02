@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { BottomNav } from './BottomNav';
 import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
@@ -29,14 +29,13 @@ export function WeaponList() {
   const { toggleCheck, checkedIndices, hasHydrated } = useWeaponCheckStore();
 
   // checkedIndicesから直接チェック状態を取得
-  const isChecked = (weaponId: string) => {
-    const weapon = WEAPON_BY_ID.get(weaponId);
-    return weapon ? checkedIndices.has(weapon.index) : false;
-  };
-
-  const getCheckedCount = (weaponIds: string[]) => {
-    return weaponIds.filter((id) => isChecked(id)).length;
-  };
+  const isChecked = useCallback(
+    (weaponId: string) => {
+      const weapon = WEAPON_BY_ID.get(weaponId);
+      return weapon ? checkedIndices.has(weapon.index) : false;
+    },
+    [checkedIndices]
+  );
   const weaponsByCategory = useMemo(() => getWeaponsByCategory(), []);
 
   // 全武器リスト
@@ -46,7 +45,14 @@ export function WeaponList() {
 
   // カテゴリごとのチェック状況を計算
   const categoryStats = useMemo(() => {
-    const stats: Record<string, { total: number; checked: number; isComplete: boolean }> = {};
+    const getCheckedCount = (weaponIds: string[]) => {
+      return weaponIds.filter((id) => isChecked(id)).length;
+    };
+
+    const stats: Record<
+      string,
+      { total: number; checked: number; isComplete: boolean }
+    > = {};
 
     // 全体の統計
     const totalWeapons = allWeapons.length;
@@ -68,7 +74,7 @@ export function WeaponList() {
       };
     });
     return stats;
-  }, [weaponsByCategory, allWeapons, getCheckedCount]);
+  }, [weaponsByCategory, allWeapons, isChecked]);
 
   // カテゴリの並び替え: all → grizzco → 未完了 → 完了済み
   const allCategories = useMemo(() => {
@@ -92,11 +98,16 @@ export function WeaponList() {
     return ['all' as const, ...sorted];
   }, [weaponsByCategory, categoryStats]);
 
-  const [activeCategory, setActiveCategory] = useState<WeaponCategoryType | 'all'>('all');
+  const [activeCategory, setActiveCategory] = useState<
+    WeaponCategoryType | 'all'
+  >('all');
 
   // アクティブなカテゴリの武器
   const activeWeapons = useMemo(
-    () => (activeCategory === 'all' ? allWeapons : weaponsByCategory[activeCategory] || []),
+    () =>
+      activeCategory === 'all'
+        ? allWeapons
+        : weaponsByCategory[activeCategory] || [],
     [activeCategory, allWeapons, weaponsByCategory]
   );
 
@@ -113,7 +124,8 @@ export function WeaponList() {
     (sum, weapons) => sum + weapons.length,
     0
   );
-  const progressPercentage = totalWeapons > 0 ? (totalChecked / totalWeapons) * 100 : 0;
+  const progressPercentage =
+    totalWeapons > 0 ? (totalChecked / totalWeapons) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -125,7 +137,9 @@ export function WeaponList() {
               <h1 className="text-xl font-bold text-gray-900 tracking-wide">
                 サーモンラン
               </h1>
-              <p className="text-xs text-gray-600 tracking-wider">ブキチェッカー</p>
+              <p className="text-xs text-gray-600 tracking-wider">
+                ブキチェッカー
+              </p>
             </div>
             <div className="text-right">
               <div className="text-2xl font-bold text-green-600">
@@ -155,12 +169,16 @@ export function WeaponList() {
                 const stats = categoryStats[category];
                 const isComplete = stats?.isComplete || false;
                 const isAllCategory = category === 'all';
-                const iconPath = isAllCategory ? null : CATEGORY_ICON_PATHS[category as WeaponCategoryType];
+                const iconPath = isAllCategory
+                  ? null
+                  : CATEGORY_ICON_PATHS[category as WeaponCategoryType];
 
                 return (
                   <button
                     key={category}
-                    onClick={() => setActiveCategory(category as WeaponCategoryType | 'all')}
+                    onClick={() =>
+                      setActiveCategory(category as WeaponCategoryType | 'all')
+                    }
                     className={`
                       rounded-lg transition-colors
                       flex items-center justify-center
@@ -207,9 +225,7 @@ export function WeaponList() {
         </div>
 
         {activeWeapons.length === 0 && (
-          <div className="text-center text-gray-500 mt-8">
-            ブキがありません
-          </div>
+          <div className="text-center text-gray-500 mt-8">ブキがありません</div>
         )}
       </main>
 
