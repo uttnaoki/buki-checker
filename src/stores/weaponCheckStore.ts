@@ -79,7 +79,7 @@ interface WeaponCheckStore {
   getEncodedProgress: () => string;
 }
 
-export const useWeaponCheckStore = create<WeaponCheckStore>()(
+const weaponCheckStoreBase = create<WeaponCheckStore>()(
   persist(
     (set, get) => ({
       checkedIndices: new Set<number>(),
@@ -153,11 +153,10 @@ export const useWeaponCheckStore = create<WeaponCheckStore>()(
     }),
     {
       name: 'weapon-checks',
-      onRehydrateStorage: () => () => {
-        useWeaponCheckStore.setState({ hasHydrated: true });
-      },
+      skipHydration: true,
       storage: {
         getItem: (name) => {
+          if (typeof window === 'undefined') return null;
           const str = localStorage.getItem(name);
           if (!str) return null;
           return {
@@ -167,13 +166,29 @@ export const useWeaponCheckStore = create<WeaponCheckStore>()(
           };
         },
         setItem: (name, value) => {
+          if (typeof window === 'undefined') return;
           const encoded = encodeIndices(value.state.checkedIndices);
           localStorage.setItem(name, encoded);
         },
         removeItem: (name) => {
+          if (typeof window === 'undefined') return;
           localStorage.removeItem(name);
         },
       },
     }
   )
 );
+
+// クライアントサイドでハイドレーションを実行
+if (typeof window !== 'undefined') {
+  const result = weaponCheckStoreBase.persist.rehydrate();
+  if (result instanceof Promise) {
+    result.then(() => {
+      weaponCheckStoreBase.setState({ hasHydrated: true });
+    });
+  } else {
+    weaponCheckStoreBase.setState({ hasHydrated: true });
+  }
+}
+
+export const useWeaponCheckStore = weaponCheckStoreBase;

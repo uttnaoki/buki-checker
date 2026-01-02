@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { BottomNav } from './BottomNav';
 import type { WeaponCategory as WeaponCategoryType } from '@/types/weapon.types';
 import { CATEGORY_LABELS } from '@/types/weapon.types';
-import { getWeaponsByCategory } from '@/data/weapons';
+import { getWeaponsByCategory, WEAPON_BY_ID } from '@/data/weapons';
 import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
 import { WeaponItem } from './WeaponItem';
 
@@ -26,7 +26,17 @@ const CATEGORY_ICON_PATHS: Record<WeaponCategoryType, string> = {
 };
 
 export function WeaponList() {
-  const { toggleCheck, isChecked, getCheckedCount, hasHydrated } = useWeaponCheckStore();
+  const { toggleCheck, checkedIndices, hasHydrated } = useWeaponCheckStore();
+
+  // checkedIndicesから直接チェック状態を取得
+  const isChecked = (weaponId: string) => {
+    const weapon = WEAPON_BY_ID.get(weaponId);
+    return weapon ? checkedIndices.has(weapon.index) : false;
+  };
+
+  const getCheckedCount = (weaponIds: string[]) => {
+    return weaponIds.filter((id) => isChecked(id)).length;
+  };
   const weaponsByCategory = useMemo(() => getWeaponsByCategory(), []);
 
   // 全武器リスト
@@ -98,7 +108,7 @@ export function WeaponList() {
     );
   }
 
-  const totalChecked = getCheckedCount();
+  const totalChecked = checkedIndices.size;
   const totalWeapons = Object.values(weaponsByCategory).reduce(
     (sum, weapons) => sum + weapons.length,
     0

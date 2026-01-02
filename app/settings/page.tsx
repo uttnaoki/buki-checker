@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { clearAll, checkAll, getCheckedCount } = useWeaponCheckStore();
+  const { clearAll, checkAll, checkedIndices } = useWeaponCheckStore();
 
-  const totalChecked = getCheckedCount();
+  const totalChecked = checkedIndices.size;
   const totalWeapons = WEAPONS.length;
   const allChecked = totalChecked === totalWeapons;
 

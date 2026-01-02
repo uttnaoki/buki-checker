@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Share2 } from 'lucide-react';
-import { WEAPONS } from '@/data/weapons';
+import { WEAPONS, WEAPON_BY_ID } from '@/data/weapons';
 import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
 import { BottomNav } from '@/components/BottomNav';
 
@@ -52,20 +52,26 @@ function createGridCells(weapons: typeof WEAPONS): GridCell[] {
 }
 
 export default function ResultPage() {
-  const { hasHydrated, isChecked, getCheckedCount, getEncodedProgress } = useWeaponCheckStore();
+  const { hasHydrated, checkedIndices, getEncodedProgress } = useWeaponCheckStore();
   const [showCompleteAnimation, setShowCompleteAnimation] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
 
+  // checkedIndicesから直接チェック状態を取得
+  const isChecked = (weaponId: string) => {
+    const weapon = WEAPON_BY_ID.get(weaponId);
+    return weapon ? checkedIndices.has(weapon.index) : false;
+  };
+
   const totalWeapons = WEAPONS.length;
-  const checkedCount = getCheckedCount();
+  const checkedCount = checkedIndices.size;
   const progressPercentage =
     totalWeapons > 0 ? (checkedCount / totalWeapons) * 100 : 0;
   const isComplete = checkedCount === totalWeapons;
-  const opacityRate = useMemo(() => {
+  const opacityValue = useMemo(() => {
     const rate = checkedCount / totalWeapons;
-    if (rate <= 0.5) return 30;
-    if (rate <= 0.75) return 20;
-    return 10;
+    if (rate <= 0.5) return 0.3;
+    if (rate <= 0.75) return 0.2;
+    return 0.1;
   }, [checkedCount, totalWeapons]);
 
   // グリッドセルを生成
@@ -200,9 +206,8 @@ export default function ResultPage() {
               return (
                 <div
                   key={isEmpty ? `empty-${index}` : weapon!.id}
-                  className={`relative aspect-square transition-opacity duration-300 ${
-                    checked ? `opacity-${opacityRate}` : 'opacity-100'
-                  }`}
+                  className="relative aspect-square transition-opacity duration-300"
+                  style={{ opacity: checked ? opacityValue : 1 }}
                 >
                   <div className={`absolute inset-0 bg-gray-800/90 m-[1px]`}>
                     {weapon && (
