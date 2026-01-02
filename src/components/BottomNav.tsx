@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CheckSquare, Trophy, Settings } from 'lucide-react';
+import { CheckSquare, Sparkles, Settings } from 'lucide-react';
 
 type NavItem = {
   href: string;
@@ -12,7 +12,7 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/', label: 'チェック', icon: CheckSquare },
-  { href: '/scratch', label: 'スクラッチ', icon: Trophy },
+  { href: '/scratch', label: 'スクラッチ', icon: Sparkles },
   { href: '/settings', label: '設定', icon: Settings },
 ];
 
