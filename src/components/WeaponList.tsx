@@ -102,14 +102,23 @@ export const WeaponList = () => {
     WeaponCategoryType | 'all'
   >('all');
 
-  // アクティブなカテゴリの武器
-  const activeWeapons = useMemo(
-    () =>
+  // アクティブなカテゴリの武器（未チェック優先でソート）
+  const activeWeapons = useMemo(() => {
+    const weapons =
       activeCategory === 'all'
         ? allWeapons
-        : weaponsByCategory[activeCategory] || [],
-    [activeCategory, allWeapons, weaponsByCategory]
-  );
+        : weaponsByCategory[activeCategory] || [];
+
+    // 未チェックの武器を上に表示
+    return [...weapons].sort((a, b) => {
+      const aChecked = isChecked(a.id);
+      const bChecked = isChecked(b.id);
+      if (aChecked !== bChecked) {
+        return aChecked ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [activeCategory, allWeapons, weaponsByCategory, isChecked]);
 
   if (!hasHydrated) {
     return (
