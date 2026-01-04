@@ -8,6 +8,7 @@ import { CATEGORY_LABELS } from '@/types/weapon.types';
 import { getWeaponsByCategory, WEAPON_BY_ID } from '@/data/weapons';
 import { useWeaponCheckStore } from '@/stores/weaponCheckStore';
 import { WeaponItem } from './WeaponItem';
+import { CATEGORY_TAB_ORDER } from '@/data/weapons';
 
 // カテゴリアイコンのマッピング
 const CATEGORY_ICON_PATHS: Record<WeaponCategoryType, string> = {
@@ -76,14 +77,10 @@ export const WeaponList = () => {
     return stats;
   }, [weaponsByCategory, allWeapons, isChecked]);
 
-  // カテゴリの並び替え: all → grizzco → 未完了 → 完了済み
+  // カテゴリの並び替え: all → 未完了 → 完了済み
   const allCategories = useMemo(() => {
-    const categories = Object.keys(weaponsByCategory) as WeaponCategoryType[];
+    const categories = [...CATEGORY_TAB_ORDER];
     const sorted = categories.sort((a, b) => {
-      // grizzco を2番目に
-      if (a === 'grizzco') return -1;
-      if (b === 'grizzco') return 1;
-
       // 完了状況で並び替え（未完了が先）
       const aComplete = categoryStats[a]?.isComplete || false;
       const bComplete = categoryStats[b]?.isComplete || false;
@@ -96,7 +93,7 @@ export const WeaponList = () => {
     });
     // all を先頭に追加
     return ['all' as const, ...sorted];
-  }, [weaponsByCategory, categoryStats]);
+  }, [categoryStats]);
 
   const [activeCategory, setActiveCategory] = useState<
     WeaponCategoryType | 'all'
@@ -241,4 +238,4 @@ export const WeaponList = () => {
       <BottomNav />
     </div>
   );
-}
+};

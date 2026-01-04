@@ -45,7 +45,6 @@ export {
   GRIZZCO_WEAPONS,
 };
 
-// カテゴリ順（ゲーム内タブ順）
 export const CATEGORY_ORDER = [
   'shooter',
   'roller',
@@ -62,6 +61,22 @@ export const CATEGORY_ORDER = [
 ] as const;
 
 export type WeaponCategory = (typeof CATEGORY_ORDER)[number];
+
+// タブ順
+export const CATEGORY_TAB_ORDER: WeaponCategory[] = [
+  'grizzco',
+  'shooter',
+  'roller',
+  'charger',
+  'slosher',
+  'spinner',
+  'maneuver',
+  'shelter',
+  'blaster',
+  'brush',
+  'stringer',
+  'wiper',
+] as const;
 
 // カテゴリと武器配列のマッピング
 export const WEAPONS_BY_CATEGORY: Record<WeaponCategory, Weapon[]> = {
